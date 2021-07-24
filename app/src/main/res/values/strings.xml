@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Weather Test Task</string>
+    <string name="todo">todo</string>
+    <string name="error">Ошибка</string>
+    <string name="reload">Перезагрузить</string>
+    <string name="settings">settings</string>
+    <string name="main">main</string>
+    <string name="favorite">favorite</string>
+    <string name="search">search</string>
+    <string name="search_wiki">Найти в Википедии</string>
+    <string name="wiki_helper_text">Введено символов:</string>
+    <string name="search_by_zip_code">Search by ZIP Code</string>
+    <string name="city">city</string>
+    <string name="cityName">cityName</string>
+    <string name="current_temp">current temp</string>
+</resources>

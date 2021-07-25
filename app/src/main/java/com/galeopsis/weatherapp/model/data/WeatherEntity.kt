@@ -19,15 +19,16 @@ data class WeatherEntity(
     @Embedded
     val main: Main?,
     val name: String?,
+    /*@Embedded
+    val weather: List<Weather>,*/
     @Embedded
     val sys: Sys?,
     val timezone: Int?,
     val visibility: Int?,
-    /* @TypeConverters(Converter::class)
-     val weather: List<Weather>,*/
     @Embedded
     val wind: Wind?
 ) {
     @PrimaryKey(autoGenerate = false)
     var dataBaseId: Int = WEATHER_ID
+
 }

@@ -1,16 +1,18 @@
 package com.galeopsis.weatherapp.model.api
 
+import com.galeopsis.weatherapp.BuildConfig.API_KEY
 import com.galeopsis.weatherapp.model.data.WeatherEntity
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface WeatherApi {
 
-    @GET("weather?zip=660132,ru&units=metric&appid=6d167d56b8ba7026a1e2247aba7cf5ec")
+    @GET("weather")
     fun getWeatherAsync(
-        /* @Query("zip") zip: String,
-         @Query("lang") lang: String,
-         @Query("units") units: String,
-         @Query("appid") appid: String = API_KEY*/
+        @Query("units") units: String = "metric",
+        @Query("appid") appId: String = API_KEY,
+        @Query("zip") zip: String = "94040",
+        @Query("lang") language: String = "us"
     ): Deferred<WeatherEntity>
 }

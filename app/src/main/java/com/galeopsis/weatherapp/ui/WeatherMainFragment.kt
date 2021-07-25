@@ -1,6 +1,10 @@
 package com.galeopsis.weatherapp.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,22 +38,58 @@ class WeatherMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*with(binding) {
+        with(binding) {
             inputLayout
                 .setEndIconOnClickListener {
+
                     val data = inputEditText.text.toString()
-                    initData(data)
+
                 }
-        }*/
-        initData()
+            context?.let { isOnline(it) }
+            initData()
+        }
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    Toast.makeText(context, "mobile", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    Toast.makeText(context, "wifi", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    Toast.makeText(context, "ethernet", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+            }
+        }
+        Toast.makeText(context, "no internet connection!!!", Toast.LENGTH_SHORT).show()
+        return false
     }
 
     private fun initData() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
-                    location.text = weatherData.name
-                    currentTemp.text = weatherData.main?.temp.toString()
+                    cityName.text = weatherData.name
+                    temperature.text = weatherData.main?.temp.toString()
+                    /*val iconWeather = weatherData.weather?.icon
+                    context?.let { it1 ->
+                        Glide.with(it1)
+                            .load("http://openweathermap.org/img/wn/$iconWeather@2x.png")
+                            .into(binding.icon)
+                    }*/
                 }
             }
         })

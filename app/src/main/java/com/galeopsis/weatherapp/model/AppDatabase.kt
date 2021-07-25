@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.galeopsis.weatherapp.model.dao.WeatherDao
 import com.galeopsis.weatherapp.model.data.WeatherEntity
 
-@Database(entities = [WeatherEntity::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val weatherDao: WeatherDao
 }

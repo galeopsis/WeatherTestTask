@@ -1,8 +1,10 @@
 package com.galeopsis.weatherapp.model.data
 
+import com.google.gson.annotations.SerializedName
+
 data class Weather(
-    val description: String?,
     val icon: String?,
-    val id: Int?,
+    @SerializedName("id")
+    val weather_id: Int?,
     val main: String?
 )

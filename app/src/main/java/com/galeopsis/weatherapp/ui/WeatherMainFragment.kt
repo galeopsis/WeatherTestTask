@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
+import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -60,9 +61,9 @@ class WeatherMainFragment : Fragment() {
                 with(binding) {
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
-                    wind.text = weatherData.wind.toString()
+                    wind.text = (weatherData.wind?.speed.toString()+" mph")
                     humidityVal.text = (weatherData.main?.humidity.toString()+" %")
-                    visibilityVal.text = weatherData.visibility.toString()
+                    visibilityVal.text = (weatherData.visibility.toString()+" Meters")
                     sunriseVal.text = weatherData.sys?.sunrise.toString()
                     sunsetVal.text = weatherData.sys?.sunset.toString()
                 }
@@ -105,11 +106,11 @@ class WeatherMainFragment : Fragment() {
                 with(binding) {
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
-                    wind.text = weatherData.wind.toString()
+                    wind.text = (weatherData.wind?.speed.toString()+" mph")
                     humidityVal.text = (weatherData.main?.humidity.toString()+" %")
-                    visibilityVal.text = weatherData.visibility.toString()
-                    sunriseVal.text = weatherData.sys?.sunrise.toString()
-                    sunsetVal.text = weatherData.sys?.sunset.toString()
+                    visibilityVal.text = (weatherData.visibility.toString()+" Meters")
+                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
+                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
                 }
             }
         })

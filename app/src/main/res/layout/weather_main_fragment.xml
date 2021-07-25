@@ -15,6 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/search_by_zip_code"
+        android:inputType="number"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:endIconCheckable="true"
@@ -67,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_margin_top"
-        android:text="@string/current_temp"
+        android:text="@string/temperature"
         app:layout_constraintStart_toStartOf="@id/cardViewContainer"
         app:layout_constraintTop_toBottomOf="@id/cityName" />
 

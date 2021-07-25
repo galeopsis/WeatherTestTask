@@ -18,6 +18,7 @@ class MainViewModel(
 
     val data = weatherRepository.data
 
+
     init {
         fetchData()
     }

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
+import com.galeopsis.weatherapp.utils.SharedPreferencesUtils
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,7 +25,7 @@ class WeatherMainFragment : Fragment() {
     private val mainViewModel by viewModel<MainViewModel>()
     private var _binding: WeatherMainFragmentBinding? = null
     private val binding get() = _binding!!
-
+    private val preferences by lazy { context?.let { SharedPreferencesUtils(it) } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +44,31 @@ class WeatherMainFragment : Fragment() {
                 .setEndIconOnClickListener {
 
                     val data = inputEditText.text.toString()
+                    preferences?.string = data
+                    val sData = preferences?.string
 
+                    Toast.makeText(context, sData, Toast.LENGTH_SHORT).show()
+                    initOfflineData()
+
+                    /*context?.let { isOnline(it) }
+                    if (context?.let { isOnline(it) } == true) {
+                        initData()
+                    } else {
+                        initOfflineData()
+                    }*/
                 }
-            context?.let { isOnline(it) }
-            initData()
         }
+    }
+
+    private fun initOfflineData() {
+        mainViewModel.data.observe(viewLifecycleOwner, {
+            it?.forEach { weatherData ->
+                with(binding) {
+                    cityName.text = weatherData.name
+                    temperature.text = weatherData.main?.temp.toString()
+                }
+            }
+        })
     }
 
     private fun isOnline(context: Context): Boolean {

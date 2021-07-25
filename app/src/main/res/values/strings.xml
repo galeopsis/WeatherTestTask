@@ -11,7 +11,8 @@
     <string name="wiki_helper_text">Введено символов:</string>
     <string name="search_by_zip_code">Search by ZIP Code</string>
     <string name="city">city</string>
-    <string name="cityName">cityName</string>
-    <string name="current_temp">Current temp</string>
+    <string name="cityName">Paris</string>
+    <string name="current_temp">+18°С</string>
     <string name="location">Location</string>
+    <string name="temperature">Temperature</string>
 </resources>

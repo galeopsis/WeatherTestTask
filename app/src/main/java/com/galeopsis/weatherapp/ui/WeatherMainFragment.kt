@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
-import com.galeopsis.weatherapp.utils.SharedPreferencesUtils
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,7 +24,6 @@ class WeatherMainFragment : Fragment() {
     private val mainViewModel by viewModel<MainViewModel>()
     private var _binding: WeatherMainFragmentBinding? = null
     private val binding get() = _binding!!
-    private val preferences by lazy { context?.let { SharedPreferencesUtils(it) } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +31,6 @@ class WeatherMainFragment : Fragment() {
     ): View {
         _binding = WeatherMainFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,20 +39,17 @@ class WeatherMainFragment : Fragment() {
         with(binding) {
             inputLayout
                 .setEndIconOnClickListener {
-
                     val data = inputEditText.text.toString()
-                    preferences?.string = data
-                    val sData = preferences?.string
+                    mainViewModel.fetchData(data)
 
-                    Toast.makeText(context, sData, Toast.LENGTH_SHORT).show()
-                    initOfflineData()
+                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show()
 
-                    /*context?.let { isOnline(it) }
+                    context?.let { isOnline(it) }
                     if (context?.let { isOnline(it) } == true) {
                         initData()
                     } else {
                         initOfflineData()
-                    }*/
+                    }
                 }
         }
     }
@@ -65,7 +59,12 @@ class WeatherMainFragment : Fragment() {
             it?.forEach { weatherData ->
                 with(binding) {
                     cityName.text = weatherData.name
-                    temperature.text = weatherData.main?.temp.toString()
+                    temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
+                    wind.text = weatherData.wind.toString()
+                    humidityVal.text = (weatherData.main?.humidity.toString()+" %")
+                    visibilityVal.text = weatherData.visibility.toString()
+                    sunriseVal.text = weatherData.sys?.sunrise.toString()
+                    sunsetVal.text = weatherData.sys?.sunset.toString()
                 }
             }
         })
@@ -95,22 +94,22 @@ class WeatherMainFragment : Fragment() {
                 }
             }
         }
-        Toast.makeText(context, "no internet connection!!!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "no internet connection!", Toast.LENGTH_SHORT).show()
         return false
     }
 
     private fun initData() {
+
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
                     cityName.text = weatherData.name
-                    temperature.text = weatherData.main?.temp.toString()
-                    /*val iconWeather = weatherData.weather?.icon
-                    context?.let { it1 ->
-                        Glide.with(it1)
-                            .load("http://openweathermap.org/img/wn/$iconWeather@2x.png")
-                            .into(binding.icon)
-                    }*/
+                    temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
+                    wind.text = weatherData.wind.toString()
+                    humidityVal.text = (weatherData.main?.humidity.toString()+" %")
+                    visibilityVal.text = weatherData.visibility.toString()
+                    sunriseVal.text = weatherData.sys?.sunrise.toString()
+                    sunsetVal.text = weatherData.sys?.sunset.toString()
                 }
             }
         })

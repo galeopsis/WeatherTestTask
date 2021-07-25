@@ -15,4 +15,14 @@
     <string name="current_temp">+18°С</string>
     <string name="location">Location</string>
     <string name="temperature">Temperature</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="_8_5_mph">8.5 mph</string>
+    <string name="humidity">Humidity</string>
+    <string name="_54">54 %</string>
+    <string name="visibility">Visibility</string>
+    <string name="clear">Clear</string>
+    <string name="_3_26_2021_2_00_00_pm_utc">3/26/2021 2:00:00 PM UTC</string>
+    <string name="time_of_sunrise">Time of Sunrise</string>
+    <string name="time_of_sunset">Time of Sunset</string>
+    <string name="_3_27_2021_2_26_00_am_utc">3/27/2021 2:26:00 AM UTC</string>
 </resources>

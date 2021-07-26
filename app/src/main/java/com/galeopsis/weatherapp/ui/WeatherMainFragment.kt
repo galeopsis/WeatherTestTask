@@ -66,8 +66,8 @@ class WeatherMainFragment : Fragment() {
                     wind.text = (weatherData.wind?.speed.toString() + " mph")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
                     visibilityVal.text = (weatherData.visibility.toString() + " Meters")
-                    sunriseVal.text = weatherData.sys?.sunrise.toString()
-                    sunsetVal.text = weatherData.sys?.sunset.toString()
+                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
+                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
                 }
             }
         })

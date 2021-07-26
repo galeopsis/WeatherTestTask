@@ -1,5 +1,6 @@
 package com.galeopsis.weatherapp.ui
 
+import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -8,9 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.galeopsis.weatherapp.R
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
@@ -44,12 +45,15 @@ class WeatherMainFragment : Fragment() {
             inputLayout
                 .setEndIconOnClickListener {
                     val zipCode = inputEditText.text.toString()
+
+                    activity?.let { it1 -> dismissKeyboard(it1) }
+
                     mainViewModel.fetchData(zipCode)
 
                     context?.let { isOnline(it) }
                     if (context?.let { isOnline(it) } == true) {
                         mainViewModel.fetchData(zipCode)
-                        initData(zipCode)
+                        initData()
                     } else {
                         initOfflineData()
                     }
@@ -57,12 +61,20 @@ class WeatherMainFragment : Fragment() {
         }
     }
 
-    private fun initData(zipCode: String?) {
+    private fun dismissKeyboard(activity: Activity) {
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (null != activity.currentFocus) imm.hideSoftInputFromWindow(
+            requireActivity().currentFocus!!.applicationWindowToken, 0
+        )
+    }
+
+    private fun initData() {
 
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
-                    cityName.text = (weatherData.name + " (zip code is: $zipCode)")
+                    cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " mph")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
@@ -129,14 +141,6 @@ class WeatherMainFragment : Fragment() {
         return false
     }
 
-    private fun WeatherMainFragmentBinding.clickListener() {
-        inputLayout
-            .setEndIconOnClickListener {
-                val zipCode = inputEditText.text.toString()
-                mainViewModel.fetchData(zipCode)
-                initData(zipCode)
-            }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

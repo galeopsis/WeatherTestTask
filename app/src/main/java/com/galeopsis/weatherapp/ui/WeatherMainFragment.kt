@@ -88,7 +88,8 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.loadingState.observe(viewLifecycleOwner, {
             when (it.status) {
                 LoadingState.Status.FAILED ->
-                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "You've entered wrong zip code!", Toast.LENGTH_SHORT).show()
                 LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
                 LoadingState.Status.SUCCESS ->

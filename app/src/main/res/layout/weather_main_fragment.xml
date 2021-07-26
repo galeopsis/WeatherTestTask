@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -176,15 +177,16 @@
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunset" />
 
-
         <FrameLayout
             android:id="@+id/loadingLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/design_default_color_on_primary"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/cardview_dark_background"
             android:visibility="gone"
-            tools:layout_editor_absoluteX="17dp"
-            tools:layout_editor_absoluteY="46dp"
+            app:layout_constraintBottom_toBottomOf="@+id/sunsetVal"
+            app:layout_constraintEnd_toEndOf="@+id/humidity"
+            app:layout_constraintStart_toStartOf="@+id/humidity"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout"
             tools:visibility="invisible">
 
             <ProgressBar

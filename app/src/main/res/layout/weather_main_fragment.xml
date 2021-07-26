@@ -18,7 +18,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_by_zip_code"
-            android:inputType="number"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
@@ -33,7 +32,7 @@
                 android:id="@+id/input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

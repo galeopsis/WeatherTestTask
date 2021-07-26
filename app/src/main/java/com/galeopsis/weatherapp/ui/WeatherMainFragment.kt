@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.galeopsis.weatherapp.R
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
@@ -37,24 +38,51 @@ class WeatherMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initOfflineData()
+
         with(binding) {
-            initOfflineData()
-            context?.let { isOnline(it) }
-            if (context?.let { isOnline(it) } == true) {
-                clickListener()
-            } else {
-                initOfflineData()
-            }
+            inputLayout
+                .setEndIconOnClickListener {
+                    val zipCode = inputEditText.text.toString()
+                    mainViewModel.fetchData(zipCode)
+
+                    context?.let { isOnline(it) }
+                    if (context?.let { isOnline(it) } == true) {
+                        mainViewModel.fetchData(zipCode)
+                        initData(zipCode)
+                    } else {
+                        initOfflineData()
+                    }
+                }
         }
     }
 
-    private fun WeatherMainFragmentBinding.clickListener() {
-        inputLayout
-            .setEndIconOnClickListener {
-                val data = inputEditText.text.toString()
-                mainViewModel.fetchData(data)
-                initData()
+    private fun initData(zipCode: String?) {
+
+        mainViewModel.data.observe(viewLifecycleOwner, {
+            it?.forEach { weatherData ->
+                with(binding) {
+                    cityName.text = (weatherData.name + " (zip code is: $zipCode)")
+                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                    wind.text = (weatherData.wind?.speed.toString() + " mph")
+                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
+                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
+                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
+                }
             }
+        })
+
+        mainViewModel.loadingState.observe(viewLifecycleOwner, {
+            when (it.status) {
+                LoadingState.Status.FAILED ->
+                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+                LoadingState.Status.RUNNING ->
+                    binding.loadingLayout.visibility = View.VISIBLE
+                LoadingState.Status.SUCCESS ->
+                    binding.loadingLayout.visibility = View.GONE
+            }
+        })
     }
 
     private fun initOfflineData() {
@@ -101,32 +129,13 @@ class WeatherMainFragment : Fragment() {
         return false
     }
 
-    private fun initData() {
-
-        mainViewModel.data.observe(viewLifecycleOwner, {
-            it?.forEach { weatherData ->
-                with(binding) {
-                    cityName.text = weatherData.name
-                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                    wind.text = (weatherData.wind?.speed.toString() + " mph")
-                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
-                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
-                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
-                }
+    private fun WeatherMainFragmentBinding.clickListener() {
+        inputLayout
+            .setEndIconOnClickListener {
+                val zipCode = inputEditText.text.toString()
+                mainViewModel.fetchData(zipCode)
+                initData(zipCode)
             }
-        })
-
-        mainViewModel.loadingState.observe(viewLifecycleOwner, {
-            when (it.status) {
-                LoadingState.Status.FAILED ->
-                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
-                LoadingState.Status.RUNNING ->
-                    binding.loadingLayout.visibility = View.VISIBLE
-                LoadingState.Status.SUCCESS ->
-                    binding.loadingLayout.visibility = View.GONE
-            }
-        })
     }
 
     override fun onDestroyView() {

@@ -38,21 +38,23 @@ class WeatherMainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            inputLayout
-                .setEndIconOnClickListener {
-                    val data = inputEditText.text.toString()
-                    mainViewModel.fetchData(data)
-
-                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show()
-
-                    context?.let { isOnline(it) }
-                    if (context?.let { isOnline(it) } == true) {
-                        initData()
-                    } else {
-                        initOfflineData()
-                    }
-                }
+            initOfflineData()
+            context?.let { isOnline(it) }
+            if (context?.let { isOnline(it) } == true) {
+                clickListener()
+            } else {
+                initOfflineData()
+            }
         }
+    }
+
+    private fun WeatherMainFragmentBinding.clickListener() {
+        inputLayout
+            .setEndIconOnClickListener {
+                val data = inputEditText.text.toString()
+                mainViewModel.fetchData(data)
+                initData()
+            }
     }
 
     private fun initOfflineData() {
@@ -60,10 +62,10 @@ class WeatherMainFragment : Fragment() {
             it?.forEach { weatherData ->
                 with(binding) {
                     cityName.text = weatherData.name
-                    temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
-                    wind.text = (weatherData.wind?.speed.toString()+" mph")
-                    humidityVal.text = (weatherData.main?.humidity.toString()+" %")
-                    visibilityVal.text = (weatherData.visibility.toString()+" Meters")
+                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                    wind.text = (weatherData.wind?.speed.toString() + " mph")
+                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
                     sunriseVal.text = weatherData.sys?.sunrise.toString()
                     sunsetVal.text = weatherData.sys?.sunset.toString()
                 }
@@ -105,10 +107,10 @@ class WeatherMainFragment : Fragment() {
             it?.forEach { weatherData ->
                 with(binding) {
                     cityName.text = weatherData.name
-                    temperature.text = ((weatherData.main?.temp?.toInt()).toString()+" °С")
-                    wind.text = (weatherData.wind?.speed.toString()+" mph")
-                    humidityVal.text = (weatherData.main?.humidity.toString()+" %")
-                    visibilityVal.text = (weatherData.visibility.toString()+" Meters")
+                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                    wind.text = (weatherData.wind?.speed.toString() + " mph")
+                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
                     sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
                     sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
                 }

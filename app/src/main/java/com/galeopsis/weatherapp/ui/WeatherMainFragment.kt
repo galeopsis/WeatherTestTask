@@ -48,8 +48,6 @@ class WeatherMainFragment : Fragment() {
 
                     activity?.let { it1 -> dismissKeyboard(it1) }
 
-                    mainViewModel.fetchData(zipCode)
-
                     context?.let { isOnline(it) }
                     if (context?.let { isOnline(it) } == true) {
                         mainViewModel.fetchData(zipCode)
@@ -89,7 +87,11 @@ class WeatherMainFragment : Fragment() {
             when (it.status) {
                 LoadingState.Status.FAILED ->
 //                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
-                    Toast.makeText(context, "You've entered wrong zip code!", Toast.LENGTH_SHORT).show()
+                {
+                    Toast.makeText(context, "You've entered wrong zip code!", Toast.LENGTH_SHORT)
+                        .show()
+                    binding.loadingLayout.visibility = View.GONE
+                }
                 LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
                 LoadingState.Status.SUCCESS ->
@@ -123,22 +125,22 @@ class WeatherMainFragment : Fragment() {
             when {
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    Toast.makeText(context, "mobile", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "mobile", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    Toast.makeText(context, "wifi", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "wifi", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    Toast.makeText(context, "ethernet", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "ethernet", Toast.LENGTH_SHORT).show()
                     return true
                 }
             }
         }
-        Toast.makeText(context, "no internet connection!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Check your internet connection!", Toast.LENGTH_SHORT).show()
         return false
     }
 

@@ -16,7 +16,7 @@ class WeatherRepository(
 
     suspend fun refresh(data: String) {
         withContext(Dispatchers.IO) {
-            val weatherData = weatherApi.getWeatherAsync(API_KEY, data).await()
+            val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()
             weatherDao.deleteAllData()
             weatherDao.add(weatherData)
         }

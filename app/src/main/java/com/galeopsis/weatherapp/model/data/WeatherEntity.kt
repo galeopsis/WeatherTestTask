@@ -19,8 +19,8 @@ data class WeatherEntity(
     @Embedded
     val main: Main?,
     val name: String?,
-    /*@Embedded
-    val weather: List<Weather>,*/
+   /* @Embedded
+    val weather: List<Weather?>,*/
     @Embedded
     val sys: Sys?,
     val timezone: Int?,
@@ -30,5 +30,4 @@ data class WeatherEntity(
 ) {
     @PrimaryKey(autoGenerate = false)
     var dataBaseId: Int = WEATHER_ID
-
 }

@@ -70,7 +70,7 @@ val netModule = module {
 val databaseModule = module {
 
     fun provideDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, "nasa.database")
+        return Room.databaseBuilder(application, AppDatabase::class.java, "weather.database")
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()

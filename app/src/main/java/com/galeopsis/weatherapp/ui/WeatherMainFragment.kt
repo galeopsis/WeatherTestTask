@@ -44,13 +44,17 @@ class WeatherMainFragment : Fragment() {
         with(binding) {
             inputLayout
                 .setEndIconOnClickListener {
-                    val zipCode = inputEditText.text.toString()
+                    val textData = inputEditText.text.toString()
+                    //удаляем последний символ если пробел
+                    val inputData = textData.dropLastWhile{
+                        it == ' '
+                    }
 
                     activity?.let { it1 -> dismissKeyboard(it1) }
 
                     context?.let { isOnline(it) }
                     if (context?.let { isOnline(it) } == true) {
-                        mainViewModel.fetchData(zipCode)
+                        mainViewModel.fetchData(inputData)
                         initData()
                     } else {
                         initOfflineData()
@@ -72,13 +76,19 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
+//                    currentCondition.text = weatherData.weather.de
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                    wind.text = (weatherData.wind?.speed.toString() + " mph")
+                    wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
+                    visibilityVal.text = (weatherData.visibility.toString() + " м.")
                     sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
                     sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
+                    /*val weatherIcon = weatherData.icon
+                    val iconUrl = "http://openweathermap.org/img/wn/+{$weatherIcon}@2x.png"
+                    Glide.with(this@WeatherMainFragment)
+                        .load(iconUrl)
+                        .into(icon)*/
                 }
             }
         })
@@ -88,7 +98,7 @@ class WeatherMainFragment : Fragment() {
                 LoadingState.Status.FAILED ->
 //                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
                 {
-                    Toast.makeText(context, "You've entered wrong zip code!", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Некорректный ввод!", Toast.LENGTH_SHORT)
                         .show()
                     binding.loadingLayout.visibility = View.GONE
                 }
@@ -104,13 +114,19 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
+//                    currentCondition.text = weatherData.description
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                    wind.text = (weatherData.wind?.speed.toString() + " mph")
+                    wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    visibilityVal.text = (weatherData.visibility.toString() + " Meters")
+                    visibilityVal.text = (weatherData.visibility.toString() + " м.")
                     sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
                     sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
+                    /* val weatherIcon = weatherData.weather?.icon
+                     val iconUrl = "http://openweathermap.org/img/wn/+{$weatherIcon}@2x.png"
+                     Glide.with(this@WeatherMainFragment)
+                         .load(iconUrl)
+                         .into(icon)*/
                 }
             }
         })

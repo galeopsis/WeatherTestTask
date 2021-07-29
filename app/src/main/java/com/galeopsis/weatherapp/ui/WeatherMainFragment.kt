@@ -45,7 +45,7 @@ class WeatherMainFragment : Fragment() {
             inputLayout
                 .setEndIconOnClickListener {
                     val textData = inputEditText.text.toString()
-                    //удаляем последний символ если пробел
+                    //удаляем последний символ если пробел.
                     val inputData = textData.dropLastWhile{
                         it == ' '
                     }

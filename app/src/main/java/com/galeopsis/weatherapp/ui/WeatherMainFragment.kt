@@ -44,10 +44,14 @@ class WeatherMainFragment : Fragment() {
         with(binding) {
             inputLayout
                 .setEndIconOnClickListener {
-                    val textData = inputEditText.text.toString()
-                    //удаляем последний символ если пробел.
-                    val inputData = textData.dropLastWhile{
+//                    val textData = inputEditText.text.toString()
+
+                    //удаляем пробелы в конце
+//                    val inputData = textData.dropLastWhile{
+                    val inputData = inputEditText.text.toString().dropLastWhile {
+
                         it == ' '
+
                     }
 
                     activity?.let { it1 -> dismissKeyboard(it1) }
@@ -75,7 +79,7 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
-//                    currentCondition.text = weatherData.weather.de
+//                    currentCondition.text = weatherData.weather.description
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
@@ -103,8 +107,10 @@ class WeatherMainFragment : Fragment() {
                 }
                 LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
-                LoadingState.Status.SUCCESS ->
+                LoadingState.Status.SUCCESS -> {
+                    binding.inputEditText.text = null
                     binding.loadingLayout.visibility = View.GONE
+                }
             }
         })
     }

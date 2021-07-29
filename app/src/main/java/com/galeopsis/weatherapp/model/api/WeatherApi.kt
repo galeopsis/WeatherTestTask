@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface WeatherApi {
 
     @GET("weather?units=metric")
-    fun getWeatherAsync(
+    fun getWeatherByZipCodeAsync(
         @Query("appid") appId: String = API_KEY,
         @Query("zip") zip: String
     ): Deferred<WeatherEntity>

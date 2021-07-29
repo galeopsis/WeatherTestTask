@@ -51,7 +51,6 @@ class WeatherMainFragment : Fragment() {
                     }
 
                     activity?.let { it1 -> dismissKeyboard(it1) }
-
                     context?.let { isOnline(it) }
                     if (context?.let { isOnline(it) } == true) {
                         mainViewModel.fetchData(inputData)

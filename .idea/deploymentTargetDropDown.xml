@@ -6,12 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="SERIAL_NUMBER" />
-            <value value="UEEDU18B30000567" />
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\galeo\.android\avd\Pixel_4_API_30.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2021-07-30T15:57:55.196364900Z" />
+    <timeTargetWasSelectedWithDropDown value="2021-07-30T18:33:03.690875200Z" />
   </component>
 </project>

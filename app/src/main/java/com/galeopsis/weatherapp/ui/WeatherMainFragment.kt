@@ -71,28 +71,7 @@ class WeatherMainFragment : Fragment() {
 
     private fun initData() {
 
-        mainViewModel.data.observe(viewLifecycleOwner, {
-            it?.forEach { weatherData ->
-                with(binding) {
-                    val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
-                    val description = textToTrim.substringBefore(',')
-                    currentCondition.text = description
-                    cityName.text = weatherData.name
-                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                    wind.text = (weatherData.wind?.speed.toString() + " м/с")
-                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    visibilityVal.text = (weatherData.visibility.toString() + " м.")
-                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
-                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
-                    val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
-                    val iconData = iconToTrim.substringBefore(')')
-                    val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
-                    Glide.with(this@WeatherMainFragment)
-                        .load(iconUrl)
-                        .into(icon)
-                }
-            }
-        })
+        fetchData()
 
         mainViewModel.loadingState.observe(viewLifecycleOwner, {
             when (it.status) {
@@ -114,19 +93,33 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun initOfflineData() {
+
+        fetchData()
+
+    }
+
+    private fun fetchData() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
                     val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                     val description = textToTrim.substringBefore(',')
                     currentCondition.text = description
-                    cityName.text = weatherData.name
+                    cityName.text = (weatherData.sys?.country+", "+weatherData.name)
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
                     visibilityVal.text = (weatherData.visibility.toString() + " м.")
-                    sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
-                    sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
+                    sunriseVal.text = weatherData.timezone?.let { it1 ->
+                        weatherData.sys?.sunrise?.unixTimestampToTimeString(
+                            it1
+                        )
+                    }
+                    sunsetVal.text = weatherData.timezone?.let { it1 ->
+                        weatherData.sys?.sunset?.unixTimestampToTimeString(
+                            it1
+                        )
+                    }
                     val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
                     val iconData = iconToTrim.substringBefore(')')
                     val iconUrl = "https://openweathermap.org/img/w/$iconData.png"

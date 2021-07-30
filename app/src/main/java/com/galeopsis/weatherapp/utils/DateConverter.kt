@@ -3,13 +3,12 @@ package com.galeopsis.weatherapp.utils
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Int.unixTimestampToTimeString() : String {
+fun Int.unixTimestampToTimeString(): String {
 
     try {
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = this*1000.toLong()
-
-        val outputDateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+        calendar.timeInMillis = this * 1000.toLong()
+        val outputDateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         outputDateFormat.timeZone = TimeZone.getDefault()
         return outputDateFormat.format(calendar.time)
 

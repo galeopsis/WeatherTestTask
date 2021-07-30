@@ -1,21 +1,27 @@
 package com.galeopsis.weatherapp.utils
 
+import android.util.Log
+import androidx.room.TypeConverter
 import com.galeopsis.weatherapp.model.data.Weather
 import com.google.gson.Gson
 
 import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 class ListConverter {
-    @androidx.room.TypeConverter
-    fun fromString(value: String?): List<Weather?>? {
-        val listType: Type = object : TypeToken<List<String?>?>() {}.type
-        return Gson().fromJson(value, listType)
+    @TypeConverter
+    fun ListToJson(weather: List<Weather?>?): String? {
+        if (weather == null) return null
+        val type = object : TypeToken<List<Weather?>?>() {}.type
+        val json = Gson().toJson(weather, type)
+        Log.i("JSON", "toJson: $json")
+        return if (weather.isEmpty()) null else json
     }
 
-    @androidx.room.TypeConverter
-    fun fromList(list: List<Weather?>?): String? {
+    @TypeConverter
+    fun JsonToList(json: String?): List<Weather>? {
         val gson = Gson()
-        return gson.toJson(list)
+        val type =
+            object : TypeToken<List<Weather?>?>() {}.type
+        return gson.fromJson<List<Weather>>(json, type)
     }
 }

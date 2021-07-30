@@ -8,7 +8,7 @@ import com.galeopsis.weatherapp.model.data.WeatherEntity
 import com.galeopsis.weatherapp.utils.ListConverter
 
 @TypeConverters(ListConverter::class)
-@Database(entities = [WeatherEntity::class], version = 3, exportSchema = false)
+@Database(entities = [WeatherEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val weatherDao: WeatherDao
 }

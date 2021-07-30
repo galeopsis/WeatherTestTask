@@ -17,6 +17,7 @@ import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
+import com.neovisionaries.i18n.CountryCode
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherMainFragment : Fragment() {
@@ -97,15 +98,17 @@ class WeatherMainFragment : Fragment() {
         fetchData()
 
     }
-
+дели
     private fun fetchData() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
+                    val countryCode = CountryCode.getByCode(weatherData.sys?.country)
+                    val country = countryCode.getName()
                     val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                     val description = textToTrim.substringBefore(',')
                     currentCondition.text = description
-                    cityName.text = (weatherData.sys?.country+", "+weatherData.name)
+                    cityName.text = (country+", "+weatherData.name)
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")

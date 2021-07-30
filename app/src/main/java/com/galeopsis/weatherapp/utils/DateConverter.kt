@@ -9,7 +9,7 @@ fun Int.unixTimestampToTimeString(zone: Int): String {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = this * 1000.toLong()
         val localZone = zone / 3600
-        val outputDateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("HH:mm:ss", Locale.ROOT)
         outputDateFormat.timeZone = TimeZone.getTimeZone("GMT+$localZone")
         return outputDateFormat.format(calendar.time)
 

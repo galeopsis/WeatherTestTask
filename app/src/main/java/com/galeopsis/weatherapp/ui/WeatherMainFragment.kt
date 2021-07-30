@@ -98,7 +98,7 @@ class WeatherMainFragment : Fragment() {
         fetchData()
 
     }
-дели
+
     private fun fetchData() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->

@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 
 class ListConverter {
     @TypeConverter
-    fun ListToJson(weather: List<Weather?>?): String? {
+    fun listToJson(weather: List<Weather?>?): String? {
         if (weather == null) return null
         val type = object : TypeToken<List<Weather?>?>() {}.type
         val json = Gson().toJson(weather, type)
@@ -18,7 +18,7 @@ class ListConverter {
     }
 
     @TypeConverter
-    fun JsonToList(json: String?): List<Weather>? {
+    fun jsonToList(json: String?): List<Weather>? {
         val gson = Gson()
         val type =
             object : TypeToken<List<Weather?>?>() {}.type

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
@@ -73,7 +74,9 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
-                    currentCondition.text = weatherData.weather[0].toString()
+                    val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
+                    val description = textToTrim.substringBefore(',')
+                    currentCondition.text = description
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
@@ -81,11 +84,12 @@ class WeatherMainFragment : Fragment() {
                     visibilityVal.text = (weatherData.visibility.toString() + " м.")
                     sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
                     sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
-                    /*val weatherIcon = weatherData.icon
-                    val iconUrl = "http://openweathermap.org/img/wn/+{$weatherIcon}@2x.png"
+                    val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
+                    val iconData = iconToTrim.substringBefore(')')
+                    val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
                     Glide.with(this@WeatherMainFragment)
                         .load(iconUrl)
-                        .into(icon)*/
+                        .into(icon)
                 }
             }
         })
@@ -113,7 +117,9 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.data.observe(viewLifecycleOwner, {
             it?.forEach { weatherData ->
                 with(binding) {
-                    currentCondition.text = weatherData.weather[0].toString()
+                    val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
+                    val description = textToTrim.substringBefore(',')
+                    currentCondition.text = description
                     cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
@@ -121,11 +127,12 @@ class WeatherMainFragment : Fragment() {
                     visibilityVal.text = (weatherData.visibility.toString() + " м.")
                     sunriseVal.text = weatherData.sys?.sunrise?.unixTimestampToTimeString()
                     sunsetVal.text = weatherData.sys?.sunset?.unixTimestampToTimeString()
-                    /* val weatherIcon = weatherData.weather?.icon
-                     val iconUrl = "http://openweathermap.org/img/wn/+{$weatherIcon}@2x.png"
-                     Glide.with(this@WeatherMainFragment)
-                         .load(iconUrl)
-                         .into(icon)*/
+                    val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
+                    val iconData = iconToTrim.substringBefore(')')
+                    val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
+                    Glide.with(this@WeatherMainFragment)
+                        .load(iconUrl)
+                        .into(icon)
                 }
             }
         })

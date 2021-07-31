@@ -44,6 +44,11 @@ class WeatherMainFragment : Fragment() {
         initOfflineData()
 
         with(binding) {
+            inputLayout
+                .setEndIconOnClickListener {
+                    searchByName("name")
+                }
+
             switchCompat.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     inputLayout

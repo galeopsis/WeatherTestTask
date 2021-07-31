@@ -13,12 +13,27 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:text="@string/zip"
+            android:textOff="@string/off"
+            android:textOn="@string/on"
+            app:showText="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cardViewContainer"/>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/search_by_city_name"
+            android:hint="@string/search_by"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
@@ -27,7 +42,7 @@
             app:helperText="символов введено:"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cardViewContainer">
+            app:layout_constraintTop_toBottomOf="@id/switch_compat">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_text"

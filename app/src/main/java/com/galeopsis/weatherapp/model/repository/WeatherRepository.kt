@@ -14,11 +14,18 @@ class WeatherRepository(
 
     val data = weatherDao.findAll()
 
-    suspend fun refresh(data: String) {
+    suspend fun refresh(data: String, method: String) {
         withContext(Dispatchers.IO) {
-            val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()
-            weatherDao.deleteAllData()
-            weatherDao.add(weatherData)
+            if (method == "zip") {
+                val weatherData = weatherApi.getWeatherByZipCodeAsync(API_KEY, data).await()
+                weatherDao.deleteAllData()
+                weatherDao.add(weatherData)
+            } else {
+                val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()
+                weatherDao.deleteAllData()
+                weatherDao.add(weatherData)
+            }
+
         }
     }
 }

@@ -18,11 +18,11 @@ class MainViewModel(
 
     val data = weatherRepository.data
 
-    fun fetchData(inputData: String) {
+    fun fetchData(inputData: String, method: String) {
         viewModelScope.launch {
             try {
                 _loadingState.value = LoadingState.LOADING
-                weatherRepository.refresh(inputData)
+                weatherRepository.refresh(inputData, method)
                 _loadingState.value = LoadingState.LOADED
             } catch (e: Exception) {
                 _loadingState.value = LoadingState.error(e.message)

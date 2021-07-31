@@ -44,21 +44,47 @@ class WeatherMainFragment : Fragment() {
         initOfflineData()
 
         with(binding) {
-            inputLayout
-                .setEndIconOnClickListener {
-                    val inputData = inputEditText.text.toString().dropLastWhile {
-                        it == ' '
-                    }
-
-                    activity?.let { it1 -> dismissKeyboard(it1) }
-                    context?.let { isOnline(it) }
-                    if (context?.let { isOnline(it) } == true) {
-                        mainViewModel.fetchData(inputData)
-                        initData()
-                    } else {
-                        initOfflineData()
-                    }
+            switchCompat.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    inputLayout
+                        .setEndIconOnClickListener {
+                            searchByZip("zip")
+                        }
+                } else {
+                    inputLayout
+                        .setEndIconOnClickListener {
+                            searchByName("name")
+                        }
                 }
+            }
+        }
+    }
+
+    private fun WeatherMainFragmentBinding.searchByZip(method: String) {
+        val inputText = inputEditText.text.toString().dropLastWhile {
+            it == ' '
+        }
+        val inputData = "$inputText,ru"
+
+        validate(inputData, method)
+    }
+
+    private fun WeatherMainFragmentBinding.searchByName(method: String) {
+        val inputText = inputEditText.text.toString().dropLastWhile {
+            it == ' '
+        }
+
+        validate(inputText, method)
+    }
+
+    private fun validate(inputData: String, method: String) {
+        activity?.let { it1 -> dismissKeyboard(it1) }
+        context?.let { isOnline(it) }
+        if (context?.let { isOnline(it) } == true) {
+            mainViewModel.fetchData(inputData, method)
+            initData()
+        } else {
+            initOfflineData()
         }
     }
 
@@ -108,7 +134,7 @@ class WeatherMainFragment : Fragment() {
                     val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                     val description = textToTrim.substringBefore(',')
                     currentCondition.text = description
-                    cityName.text = (country+", "+weatherData.name)
+                    cityName.text = (country + ", " + weatherData.name)
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
@@ -158,7 +184,7 @@ class WeatherMainFragment : Fragment() {
                 }
             }
         }
-        Toast.makeText(context, "Check your internet connection!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Проверьте подключение к интернет!", Toast.LENGTH_SHORT).show()
         return false
     }
 

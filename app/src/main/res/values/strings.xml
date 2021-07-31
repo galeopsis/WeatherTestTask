@@ -28,4 +28,8 @@
     <string name="search_by_city_name">Поиск по названию населённого пункта</string>
     <string name="condition">Состояние</string>
     <string name="current_condition">Облачно</string>
+    <string name="search_by">Поиск по индексу или названию</string>
+    <string name="zip">поиск по индексу</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
 </resources>

@@ -43,7 +43,11 @@ class WeatherMainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initOfflineData()
+        initListeners()
 
+    }
+
+    private fun initListeners() {
         with(binding) {
             inputLayout
                 .setEndIconOnClickListener {
@@ -69,18 +73,20 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun WeatherMainFragmentBinding.searchByZip(method: String) {
-        val inputText = inputEditText.text.toString().dropLastWhile {
-            it == ' '
-        }
+        val inputText = deleteSpace()
         val inputData = "$inputText,ru"
         validate(inputData, method)
     }
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
-        val inputText = inputEditText.text.toString().dropLastWhile {
+        val inputText = deleteSpace()
+        validate(inputText, method)
+    }
+
+    private fun WeatherMainFragmentBinding.deleteSpace(): String {
+        return inputEditText.text.toString().dropLastWhile {
             it == ' '
         }
-        validate(inputText, method)
     }
 
     private fun validate(inputData: String, method: String) {

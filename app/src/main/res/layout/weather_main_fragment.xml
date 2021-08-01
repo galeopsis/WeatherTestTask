@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_weather">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
@@ -23,9 +24,9 @@
             android:text="@string/zip"
             android:textOff="@string/off"
             android:textOn="@string/on"
-            app:showText="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cardViewContainer"/>
+            app:layout_constraintTop_toTopOf="@id/cardViewContainer"
+            app:showText="true" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,10 +83,10 @@
 
         <TextView
             android:id="@+id/currentCondition"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
-            android:text="@string/current_condition"
+            android:text="@string/cloudy"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -93,12 +94,14 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_marginTop="@dimen/app_margin_top"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/currentCondition"
-            android:contentDescription="@string/todo" />
+            android:layout_marginTop="@dimen/app_margin_top"
+            android:contentDescription="@string/todo"
+            app:layout_constraintBottom_toBottomOf="@+id/currentCondition"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/currentCondition"
+            app:layout_constraintTop_toBottomOf="@+id/condition" />
 
         <TextView
             android:id="@+id/currentTemp"

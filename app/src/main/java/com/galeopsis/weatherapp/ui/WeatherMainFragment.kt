@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,11 +52,13 @@ class WeatherMainFragment : Fragment() {
 
             switchCompat.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
+                    inputEditText.inputType = InputType.TYPE_CLASS_NUMBER
                     inputLayout
                         .setEndIconOnClickListener {
                             searchByZip("zip")
                         }
                 } else {
+                    inputEditText.inputType = InputType.TYPE_CLASS_TEXT
                     inputLayout
                         .setEndIconOnClickListener {
                             searchByName("name")
@@ -70,7 +73,6 @@ class WeatherMainFragment : Fragment() {
             it == ' '
         }
         val inputData = "$inputText,ru"
-
         validate(inputData, method)
     }
 
@@ -78,7 +80,6 @@ class WeatherMainFragment : Fragment() {
         val inputText = inputEditText.text.toString().dropLastWhile {
             it == ' '
         }
-
         validate(inputText, method)
     }
 
@@ -110,7 +111,7 @@ class WeatherMainFragment : Fragment() {
                 LoadingState.Status.FAILED ->
 //                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
                 {
-                    Toast.makeText(context, "Некорректный ввод!", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
                         .show()
                     binding.loadingLayout.visibility = View.GONE
                 }

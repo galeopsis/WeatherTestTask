@@ -163,7 +163,7 @@
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/humidity" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/visibility"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/visibility" />
+            app:layout_constraintTop_toBottomOf="@id/visibility" />-->
 
         <TextView
             android:id="@+id/sunrise"
@@ -190,7 +190,7 @@
             android:layout_marginTop="@dimen/app_margin_top"
             android:text="@string/time_of_sunrise"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/visibilityVal" />
+            app:layout_constraintTop_toBottomOf="@id/humidityVal" />
 
         <TextView
             android:id="@+id/sunriseVal"

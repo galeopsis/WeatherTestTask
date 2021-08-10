@@ -42,7 +42,7 @@ class WeatherMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initOfflineData()
+        fetchData()
         initListeners()
 
     }
@@ -96,7 +96,7 @@ class WeatherMainFragment : Fragment() {
             mainViewModel.fetchData(inputData, method)
             initData()
         } else {
-            initOfflineData()
+            fetchData()
         }
     }
 
@@ -114,13 +114,12 @@ class WeatherMainFragment : Fragment() {
 
         mainViewModel.loadingState.observe(viewLifecycleOwner, {
             when (it.status) {
-                LoadingState.Status.FAILED ->
-//                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
-                {
+                LoadingState.Status.FAILED -> {
                     Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
                         .show()
                     binding.loadingLayout.visibility = View.GONE
                 }
+
                 LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
                 LoadingState.Status.SUCCESS -> {
@@ -129,12 +128,6 @@ class WeatherMainFragment : Fragment() {
                 }
             }
         })
-    }
-
-    private fun initOfflineData() {
-
-        fetchData()
-
     }
 
     private fun fetchData() {
@@ -150,7 +143,6 @@ class WeatherMainFragment : Fragment() {
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    visibilityVal.text = (weatherData.visibility.toString() + " м.")
                     sunriseVal.text = weatherData.timezone?.let { it1 ->
                         weatherData.sys?.sunrise?.unixTimestampToTimeString(
                             it1
@@ -199,7 +191,6 @@ class WeatherMainFragment : Fragment() {
         Toast.makeText(context, "Проверьте подключение к интернет!", Toast.LENGTH_SHORT).show()
         return false
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

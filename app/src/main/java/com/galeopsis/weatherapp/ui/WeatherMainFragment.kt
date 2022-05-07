@@ -43,8 +43,17 @@ class WeatherMainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fetchData()
+        updateCurrentCity()
         initListeners()
 
+    }
+
+    private fun updateCurrentCity() {
+        with(binding) {
+            val cityName = cityName.text.toString()
+            Log.d("citycity", "$cityName")
+            validate("Красноярск", "name")
+        }
     }
 
     private fun initListeners() {
@@ -112,7 +121,7 @@ class WeatherMainFragment : Fragment() {
 
         fetchData()
 
-        mainViewModel.loadingState.observe(viewLifecycleOwner, {
+        mainViewModel.loadingState.observe(viewLifecycleOwner) {
             when (it.status) {
                 LoadingState.Status.FAILED -> {
                     Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
@@ -127,11 +136,11 @@ class WeatherMainFragment : Fragment() {
                     binding.loadingLayout.visibility = View.GONE
                 }
             }
-        })
+        }
     }
 
     private fun fetchData() {
-        mainViewModel.data.observe(viewLifecycleOwner, {
+        mainViewModel.data.observe(viewLifecycleOwner) {
             it?.forEach { weatherData ->
                 with(binding) {
                     val countryCode = CountryCode.getByCode(weatherData.sys?.country)
@@ -161,7 +170,7 @@ class WeatherMainFragment : Fragment() {
                         .into(icon)
                 }
             }
-        })
+        }
     }
 
     private fun isOnline(context: Context): Boolean {
@@ -190,6 +199,11 @@ class WeatherMainFragment : Fragment() {
         }
         Toast.makeText(context, "Проверьте подключение к интернет!", Toast.LENGTH_SHORT).show()
         return false
+    }
+
+    override fun onResume() {
+        updateCurrentCity()
+        super.onResume()
     }
 
     override fun onDestroyView() {

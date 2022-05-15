@@ -79,7 +79,7 @@ class WeatherMainFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == 42) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Granted. Start getting the location information
+                updateCurrentCity()
             }
         }
     }
@@ -101,12 +101,12 @@ class WeatherMainFragment : Fragment() {
     private fun getLastLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
                     val location: Location? = task.result
                     if (location != null) {
                         latitude = location.latitude.toString()
                         longtitude = location.longitude.toString()
+                        validate("lat=$latitude&lon=$longtitude", "coordinates")
                     }
                 }
             } else {
@@ -121,15 +121,6 @@ class WeatherMainFragment : Fragment() {
 
     private fun updateCurrentCity() {
         getLastLocation()
-
-        if (latitude.isEmpty()) {
-            Log.d("citycity", "longtitude = $longtitude *** latitude = $latitude *** is gps on = ${checkPermissions()}")
-            getLastLocation()
-            Log.d("citycity", "longtitude = $longtitude *** latitude = $latitude *** is gps on = ${checkPermissions()}")
-
-        } else {
-            validate("lat=$latitude&lon=$longtitude", "coordinates")
-        }
     }
 
     private fun initListeners() {
@@ -165,7 +156,11 @@ class WeatherMainFragment : Fragment() {
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
+        if (inputText.isNotEmpty()) {
         validate(inputText, method)
+        } else {
+            getLastLocation()
+        }
     }
 
     private fun WeatherMainFragmentBinding.deleteSpace(): String {

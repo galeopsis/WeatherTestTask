@@ -19,4 +19,11 @@ interface WeatherApi {
         @Query("appid") appId: String = API_KEY,
         @Query("q") q: String
     ): Deferred<WeatherEntity>
+
+    @GET("weather?units=metric&lang=ru")
+    fun getWeatherByCoordinatesAsync(
+        @Query("appid") appId: String = API_KEY,
+        @Query("lat") lat: String,
+        @Query("lon") long: String
+    ): Deferred<WeatherEntity>
 }

@@ -5,6 +5,8 @@ plugins {
 
 apply plugin: 'kotlin-kapt'
 
+def gitCommitCount = 0001 + getGitCommitCount()
+
 android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
@@ -13,7 +15,7 @@ android {
         applicationId "com.galeopsis.weatherapp"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode getGitCommitCount()
+        versionCode gitCommitCount
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

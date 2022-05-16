@@ -5,12 +5,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.provider.Settings
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -56,35 +58,16 @@ class WeatherMainFragment : Fragment() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        checkIsLocationEnabled()
+        getLastLocation()
         fetchData()
         initListeners()
 
     }
 
-    private fun checkIsLocationEnabled() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                updateCurrentCity()
-            } else {
-                Toast.makeText(requireContext(), "Turn on location", Toast.LENGTH_LONG).show()
-            }
-        } else {
-            requestPermissions()
-        }
-    }
-
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
-            mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
-                val location: Location? = task.result
-                if (location != null) {
-                    latitude = location.latitude.toString()
-                    longtitude = location.longitude.toString()
-                    validate("lat=$latitude&lon=$longtitude", "coordinates")
-                }
-            }
-        /*if (checkPermissions()) {
+
+        if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
                     val location: Location? = task.result
@@ -101,7 +84,7 @@ class WeatherMainFragment : Fragment() {
             }
         } else {
             requestPermissions()
-        }*/
+        }
     }
 
     private fun checkPermissions(): Boolean {
@@ -191,7 +174,7 @@ class WeatherMainFragment : Fragment() {
         if (inputText.isNotEmpty()) {
             validate(inputText, method)
         } else {
-            checkIsLocationEnabled()
+            getLastLocation()
         }
     }
 

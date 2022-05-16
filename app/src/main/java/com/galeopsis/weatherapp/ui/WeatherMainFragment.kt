@@ -5,14 +5,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.provider.Settings
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +19,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
@@ -29,7 +26,6 @@ import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationServices
 import com.neovisionaries.i18n.CountryCode
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -60,46 +56,35 @@ class WeatherMainFragment : Fragment() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        updateCurrentCity()
+        checkIsLocationEnabled()
         fetchData()
         initListeners()
 
     }
 
-    private fun checkPermissions(): Boolean {
-        if (
-            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            return true
-        }
-        return false
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == 42) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+    private fun checkIsLocationEnabled() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
                 updateCurrentCity()
+            } else {
+                Toast.makeText(requireContext(), "Turn on location", Toast.LENGTH_LONG).show()
             }
+        } else {
+            requestPermissions()
         }
-    }
-
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
-
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 42)
     }
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
-        if (checkPermissions()) {
+            mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                val location: Location? = task.result
+                if (location != null) {
+                    latitude = location.latitude.toString()
+                    longtitude = location.longitude.toString()
+                    validate("lat=$latitude&lon=$longtitude", "coordinates")
+                }
+            }
+        /*if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
                     val location: Location? = task.result
@@ -116,7 +101,54 @@ class WeatherMainFragment : Fragment() {
             }
         } else {
             requestPermissions()
+        }*/
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
         }
+        return false
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 42) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ), 42
+        )
     }
 
     private fun updateCurrentCity() {
@@ -157,9 +189,9 @@ class WeatherMainFragment : Fragment() {
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
         if (inputText.isNotEmpty()) {
-        validate(inputText, method)
+            validate(inputText, method)
         } else {
-            getLastLocation()
+            checkIsLocationEnabled()
         }
     }
 

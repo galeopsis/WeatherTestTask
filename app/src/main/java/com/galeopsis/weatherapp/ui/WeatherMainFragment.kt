@@ -246,7 +246,7 @@ class WeatherMainFragment : Fragment() {
                     val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                     val description = textToTrim.substringBefore(',')
                     versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
-                    currentCondition.text = description
+//                    currentCondition.text = description
                     cityName.text = (weatherData.name)
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")

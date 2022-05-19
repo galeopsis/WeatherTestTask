@@ -87,6 +87,18 @@ class WeatherMainFragment : Fragment() {
         }
     }
 
+    private fun getVersion(context: Context): String {
+        var version = ""
+        try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            version = pInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+        return version
+    }
+
     private fun checkPermissions(): Boolean {
         if (
             ActivityCompat.checkSelfPermission(
@@ -233,8 +245,9 @@ class WeatherMainFragment : Fragment() {
                     val country = countryCode.getName()
                     val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                     val description = textToTrim.substringBefore(',')
+                    versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
                     currentCondition.text = description
-                    cityName.text = (country + ", " + weatherData.name)
+                    cityName.text = (weatherData.name)
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")

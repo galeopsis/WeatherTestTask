@@ -52,45 +52,65 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/location"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/input_layout" />
+            app:layout_constraintTop_toBottomOf="@id/input_layout" />-->
 
         <TextView
             android:id="@+id/cityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_top"
-            android:text=""
+            android:layout_marginTop="25sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Красноярск"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/location" />
+            app:layout_constraintTop_toBottomOf="@id/input_layout" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/condition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/condition"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/cityName" />
+            app:layout_constraintTop_toBottomOf="@id/cityName" />-->
 
         <TextView
             android:id="@+id/currentCondition"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/cloudy"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/condition" />
+            app:layout_constraintTop_toBottomOf="@id/cityName" />
 
         <ImageView
             android:id="@+id/icon"
@@ -108,7 +128,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/temperature"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/icon" />
 
@@ -117,8 +142,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/current_temp"
-            android:textSize="@dimen/defaultTextSize"
+            android:textColor="#E6D005"
+            android:textSize="50sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/currentTemp" />
@@ -128,7 +158,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/wind_speed"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/temperature" />
 
@@ -137,7 +172,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/_8_5_mph"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -148,7 +188,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/humidity"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/wind" />
 
@@ -157,38 +202,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/_54"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/humidity" />
-
-        <!--<TextView
-            android:id="@+id/visibility"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_top"
-            android:text="@string/visibility"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/humidityVal" />
-
-        <TextView
-            android:id="@+id/visibilityVal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_top"
-            android:text="@string/clear"
-            android:textSize="@dimen/defaultTextSize"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/visibility" />-->
 
         <TextView
             android:id="@+id/sunrise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/time_of_sunrise"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/humidityVal" />
 
@@ -197,7 +232,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/_3_26_2021_2_00_00_pm_utc"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -208,7 +248,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/time_of_sunset"
+            android:textColor="#DAC931"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunriseVal" />
 
@@ -217,11 +262,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/_3_27_2021_2_26_00_am_utc"
+            android:textColor="#E6D005"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunset" />
+
+        <TextView
+            android:id="@+id/versionNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Версия: 1.1.0.2"
+            android:textColor="#E6D005"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
+            app:layout_constraintTop_toBottomOf="@id/sunsetVal" />
 
         <FrameLayout
             android:id="@+id/loadingLayout"

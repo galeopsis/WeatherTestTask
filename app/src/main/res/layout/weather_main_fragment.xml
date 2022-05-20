@@ -120,8 +120,8 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/todo"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +132,6 @@
             android:id="@+id/windSpeed"
             android:layout_width="120dp"
             android:layout_height="20dp"
-            android:layout_marginTop="@dimen/app_margin_top"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -140,8 +139,8 @@
             android:text="@string/wind_speed"
             android:textColor="#49D895"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/icon" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/wind"
@@ -163,9 +162,8 @@
             android:id="@+id/humidity"
             android:layout_width="120dp"
             android:layout_height="20dp"
-            android:layout_marginTop="15dp"
-            android:shadowColor="@color/black"
             android:gravity="end"
+            android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
@@ -173,9 +171,7 @@
             android:textColor="#49D895"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.806"
-            app:ete="@+id/windSpeed"
-            app:layout_constraintTop_toBottomOf="@+id/icon" />
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/humidityVal"
@@ -199,7 +195,7 @@
             android:id="@+id/sunrise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_top"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:shadowColor="@color/black"
             android:shadowDx="1"
@@ -274,6 +270,7 @@
             android:textColor="@color/teal_200"
             android:textSize="10sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunsetVal" />
 

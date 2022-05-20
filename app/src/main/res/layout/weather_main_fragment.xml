@@ -280,7 +280,6 @@
             android:id="@+id/loadingLayout"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@color/cardview_dark_background"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/sunsetVal"
             app:layout_constraintEnd_toEndOf="@+id/humidity"

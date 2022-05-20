@@ -248,8 +248,7 @@ class WeatherMainFragment : Fragment() {
                     val description = textToTrim.substringBefore(',')
                     versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
 //                    currentCondition.text = description
-                    if (weatherData.name == "Бадалык") weatherData.name = "Красноярск"
-                    cityName.text = weatherData.name
+                    if (weatherData.name == "Бадалык") weatherData.name = "Красноярск" else cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")

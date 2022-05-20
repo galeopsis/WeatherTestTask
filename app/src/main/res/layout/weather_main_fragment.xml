@@ -130,10 +130,9 @@
 
         <TextView
             android:id="@+id/windSpeed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginTop="@dimen/app_margin_top"
-            android:gravity="center"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -146,10 +145,9 @@
 
         <TextView
             android:id="@+id/wind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="115dp"
+            android:layout_height="38dp"
             android:layout_marginTop="5dp"
-            android:gravity="center"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -163,26 +161,29 @@
 
         <TextView
             android:id="@+id/humidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_top"
-            android:gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
             android:shadowColor="@color/black"
+            android:gravity="end"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
             android:text="@string/humidity"
             android:textColor="#49D895"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/wind" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.806"
+            app:ete="@+id/windSpeed"
+            app:layout_constraintTop_toBottomOf="@+id/icon" />
 
         <TextView
             android:id="@+id/humidityVal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="115dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="248dp"
             android:layout_marginTop="5dp"
-            android:gravity="center"
+            android:gravity="end"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -191,7 +192,7 @@
             android:textColor="#1432C3"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
+            app:layout_constraintEnd_toEndOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/humidity" />
 
         <TextView
@@ -264,10 +265,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:gravity="end"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:gravity="end"
             android:shadowRadius="2"
             android:text="Версия: 1.1.0.2"
             android:textColor="@color/teal_200"
@@ -282,9 +283,9 @@
             android:layout_height="150dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/sunsetVal"
-            app:layout_constraintEnd_toEndOf="@+id/humidity"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="@+id/humidity"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_layout"
             app:layout_constraintVertical_bias="0.072"
             tools:visibility="invisible">

@@ -222,8 +222,8 @@ class WeatherMainFragment : Fragment() {
         mainViewModel.loadingState.observe(viewLifecycleOwner) {
             when (it.status) {
                 LoadingState.Status.FAILED -> {
-                    Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
-                        .show()
+                    /*Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
+                        .show()*/
                     binding.loadingLayout.visibility = View.GONE
                 }
 
@@ -247,7 +247,8 @@ class WeatherMainFragment : Fragment() {
                     val description = textToTrim.substringBefore(',')
                     versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
 //                    currentCondition.text = description
-                    cityName.text = (weatherData.name)
+                    if (weatherData.name == "Бадалык") weatherData.name = "Красноярск"
+                    cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
@@ -261,13 +262,16 @@ class WeatherMainFragment : Fragment() {
                             it1
                         )
                     }
+
                     val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
                     val iconData = iconToTrim.substringBefore(')')
                     val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
+
                     Glide.with(this@WeatherMainFragment)
                         .load(iconUrl)
                         .into(icon)
                 }
+
             }
         }
     }

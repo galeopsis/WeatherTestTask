@@ -18,7 +18,7 @@ data class WeatherEntity(
     val id: Int?,
     @Embedded
     val main: Main?,
-    val name: String?,
+    var name: String?,
 //    @Embedded
     val weather: List<Weather?>,
     @Embedded

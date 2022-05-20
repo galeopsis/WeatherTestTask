@@ -283,8 +283,10 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/sunsetVal"
             app:layout_constraintEnd_toEndOf="@+id/humidity"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@+id/humidity"
             app:layout_constraintTop_toBottomOf="@+id/input_layout"
+            app:layout_constraintVertical_bias="0.072"
             tools:visibility="invisible">
 
             <ProgressBar

@@ -74,6 +74,7 @@ class WeatherMainFragment : Fragment() {
                     if (location != null) {
                         latitude = location.latitude.toString()
                         longtitude = location.longitude.toString()
+                        Log.d("gpstest", "getLastLocation: $latitude $longtitude")
                         validate("lat=$latitude&lon=$longtitude", "coordinates")
                     }
                 }

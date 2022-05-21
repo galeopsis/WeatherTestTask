@@ -27,7 +27,7 @@ class MainViewModel(
                 _loadingState.value = LoadingState.LOADED
             } catch (e: Exception) {
                 _loadingState.value = LoadingState.error(e.message)
-                Log.d("errtest", "fetchData: ${e.message} ")
+                Log.d("errtest", "error: ${e.message} ")
             }
         }
     }

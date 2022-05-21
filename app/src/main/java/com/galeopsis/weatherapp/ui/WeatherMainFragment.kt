@@ -248,43 +248,49 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun fetchData() {
-        mainViewModel.data.observe(viewLifecycleOwner) {
-            it?.forEach { weatherData ->
-                with(binding) {
-                    val countryCode = CountryCode.getByCode(weatherData.sys?.country)
-                    val country = countryCode.getName()
-                    val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
-                    val description = textToTrim.substringBefore(',')
-                    versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
+        try {
+            mainViewModel.data.observe(viewLifecycleOwner) {
+                it?.forEach { weatherData ->
+                    with(binding) {
+                        val countryCode = CountryCode.getByCode(weatherData.sys?.country)
+                        val country = countryCode.getName()
+                        val textToTrim =
+                            (weatherData.weather.toString()).substringAfter("description=")
+                        val description = textToTrim.substringBefore(',')
+                        versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
 //                    currentCondition.text = description
 //                    cityName.text = weatherData.name
-                    if (weatherData.name == "Бадалык") cityName.text = "Красноярск" else cityName.text = weatherData.name
+                        if (weatherData.name == "Бадалык") cityName.text =
+                            "Красноярск" else cityName.text = weatherData.name
 //                    cityName.text = weatherData.name
-                    temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                    wind.text = (weatherData.wind?.speed.toString() + " м/с")
-                    humidityVal.text = (weatherData.main?.humidity.toString() + " %")
-                    sunriseVal.text = weatherData.timezone?.let { it1 ->
-                        weatherData.sys?.sunrise?.unixTimestampToTimeString(
-                            it1
-                        )
-                    }
+                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                        wind.text = (weatherData.wind?.speed.toString() + " м/с")
+                        humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                        sunriseVal.text = weatherData.timezone?.let { it1 ->
+                            weatherData.sys?.sunrise?.unixTimestampToTimeString(
+                                it1
+                            )
+                        }
 //                    Log.d("gpstest", "${weatherData.name} ${(weatherData.main?.temp?.toInt()).toString()}°С $latitude $longtitude")
-                    sunsetVal.text = weatherData.timezone?.let { it1 ->
-                        weatherData.sys?.sunset?.unixTimestampToTimeString(
-                            it1
-                        )
+                        sunsetVal.text = weatherData.timezone?.let { it1 ->
+                            weatherData.sys?.sunset?.unixTimestampToTimeString(
+                                it1
+                            )
+                        }
+
+                        val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
+                        val iconData = iconToTrim.substringBefore(')')
+                        val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
+
+                        Glide.with(this@WeatherMainFragment)
+                            .load(iconUrl)
+                            .into(icon)
                     }
 
-                    val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
-                    val iconData = iconToTrim.substringBefore(')')
-                    val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
-
-                    Glide.with(this@WeatherMainFragment)
-                        .load(iconUrl)
-                        .into(icon)
                 }
-
             }
+        } catch (e: Exception) {
+            Log.d("errtest", "exception: ${e.fillInStackTrace()}")
         }
     }
 

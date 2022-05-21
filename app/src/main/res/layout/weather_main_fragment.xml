@@ -62,7 +62,6 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="3"
-            android:text="Красноярск"
             android:textColor="#A59F61"
             android:textSize="40sp"
             android:textStyle="bold"

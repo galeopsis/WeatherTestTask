@@ -60,6 +60,7 @@ class WeatherMainFragment : Fragment() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         fetchData()
+        setCity()
         initListeners()
 
     }
@@ -147,10 +148,6 @@ class WeatherMainFragment : Fragment() {
         )
     }
 
-    private fun updateCurrentCity() {
-        getLastLocation()
-    }
-
     private fun initListeners() {
         with(binding) {
             gps.setOnClickListener{
@@ -190,10 +187,18 @@ class WeatherMainFragment : Fragment() {
         if (inputText.isNotEmpty()) {
             validate(inputText, method)
         } else {
-            val city = binding.cityName.text
-            validate("lat=$latitude&lon=$longtitude", "coordinates")
-//            validate(city as String,"name")
+            setCity()
         }
+    }
+
+    private fun setCity() {
+        val city = binding.cityName.text
+        if (latitude.isNotEmpty()) validate(
+            "lat=$latitude&lon=$longtitude",
+            "coordinates"
+        ) else validate(city as String, "name")
+        Log.d("gpstest", "onViewCreated: $latitude $city")
+
     }
 
     private fun WeatherMainFragmentBinding.deleteSpace(): String {
@@ -253,7 +258,7 @@ class WeatherMainFragment : Fragment() {
                     versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
 //                    currentCondition.text = description
 //                    cityName.text = weatherData.name
-                    if (weatherData.name == "Бадалык") weatherData.name = "Красноярск" else cityName.text = weatherData.name
+                    if (weatherData.name == "Бадалык") cityName.text = "Красноярск" else cityName.text = weatherData.name
 //                    cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")

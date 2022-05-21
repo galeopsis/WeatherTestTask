@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
+import com.galeopsis.weatherapp.model.repository.WeatherRepository
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
@@ -58,34 +59,9 @@ class WeatherMainFragment : Fragment() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        getLastLocation()
         fetchData()
         initListeners()
 
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
-
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
-                    val location: Location? = task.result
-                    if (location != null) {
-                        latitude = location.latitude.toString()
-                        longtitude = location.longitude.toString()
-                        Log.d("gpstest", "getLastLocation: $latitude $longtitude")
-                        validate("lat=$latitude&lon=$longtitude", "coordinates")
-                    }
-                }
-            } else {
-                Toast.makeText(requireContext(), "Turn on location", Toast.LENGTH_LONG).show()
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
-            requestPermissions()
-        }
     }
 
     private fun getVersion(context: Context): String {
@@ -99,6 +75,30 @@ class WeatherMainFragment : Fragment() {
 
         return version
     }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                    val location: Location? = task.result
+                    if (location != null) {
+                        latitude = location.latitude.toString()
+                        longtitude = location.longitude.toString()
+                        validate("lat=$latitude&lon=$longtitude", "coordinates")
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
 
     private fun checkPermissions(): Boolean {
         if (
@@ -153,6 +153,9 @@ class WeatherMainFragment : Fragment() {
 
     private fun initListeners() {
         with(binding) {
+            gps.setOnClickListener{
+                getLastLocation()
+            }
             inputLayout
                 .setEndIconOnClickListener {
                     searchByName("name")
@@ -187,7 +190,9 @@ class WeatherMainFragment : Fragment() {
         if (inputText.isNotEmpty()) {
             validate(inputText, method)
         } else {
-            getLastLocation()
+            val city = binding.cityName.text
+            validate("lat=$latitude&lon=$longtitude", "coordinates")
+//            validate(city as String,"name")
         }
     }
 
@@ -205,6 +210,7 @@ class WeatherMainFragment : Fragment() {
             initData()
         } else {
             fetchData()
+
         }
     }
 
@@ -217,8 +223,6 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun initData() {
-
-        fetchData()
 
         mainViewModel.loadingState.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -248,7 +252,9 @@ class WeatherMainFragment : Fragment() {
                     val description = textToTrim.substringBefore(',')
                     versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
 //                    currentCondition.text = description
+//                    cityName.text = weatherData.name
                     if (weatherData.name == "Бадалык") weatherData.name = "Красноярск" else cityName.text = weatherData.name
+//                    cityName.text = weatherData.name
                     temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                     wind.text = (weatherData.wind?.speed.toString() + " м/с")
                     humidityVal.text = (weatherData.main?.humidity.toString() + " %")
@@ -257,6 +263,7 @@ class WeatherMainFragment : Fragment() {
                             it1
                         )
                     }
+//                    Log.d("gpstest", "${weatherData.name} ${(weatherData.main?.temp?.toInt()).toString()}°С $latitude $longtitude")
                     sunsetVal.text = weatherData.timezone?.let { it1 ->
                         weatherData.sys?.sunset?.unixTimestampToTimeString(
                             it1
@@ -305,7 +312,6 @@ class WeatherMainFragment : Fragment() {
     }
 
     override fun onResume() {
-        updateCurrentCity()
         super.onResume()
     }
 

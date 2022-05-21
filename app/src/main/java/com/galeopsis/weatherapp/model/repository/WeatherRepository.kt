@@ -31,7 +31,6 @@ class WeatherRepository(
                     val lat1 = data.substringAfter("=")
                     val lat = lat1.substringBefore("&")
                     val lon = data.substringAfterLast("=")
-                    Log.d("latlonger", "refresh: lat = $lat long = $lon")
                     val weatherData = weatherApi.getWeatherByCoordinatesAsync(API_KEY, lat, lon).await()
                     weatherDao.deleteAllData()
                     weatherDao.add(weatherData)

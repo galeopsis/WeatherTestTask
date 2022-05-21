@@ -294,6 +294,18 @@
                 android:layout_gravity="center" />
         </FrameLayout>
 
+        <ImageView
+            android:id="@+id/gps"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/gps"
+            app:layout_constraintBottom_toTopOf="@+id/input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.917"
+            app:layout_constraintStart_toEndOf="@+id/switch_compat" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

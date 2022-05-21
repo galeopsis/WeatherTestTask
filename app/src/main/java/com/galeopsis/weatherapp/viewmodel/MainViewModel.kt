@@ -1,5 +1,6 @@
 package com.galeopsis.weatherapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +27,7 @@ class MainViewModel(
                 _loadingState.value = LoadingState.LOADED
             } catch (e: Exception) {
                 _loadingState.value = LoadingState.error(e.message)
+                Log.d("errtest", "fetchData: ${e.message} ")
             }
         }
     }

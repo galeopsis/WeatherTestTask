@@ -197,7 +197,7 @@ class WeatherMainFragment : Fragment() {
             "lat=$latitude&lon=$longtitude",
             "coordinates"
         ) else validate(city as String, "name")
-        Log.d("gpstest", "onViewCreated: $latitude $city")
+        Log.d("errtest", "onViewCreated: $latitude $longtitude $city")
 
     }
 
@@ -296,17 +296,17 @@ class WeatherMainFragment : Fragment() {
         if (capabilities != null) {
             when {
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    Log.i("errtest", "NetworkCapabilities.TRANSPORT_CELLULAR")
 //                    Toast.makeText(context, "mobile", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    Log.i("errtest", "NetworkCapabilities.TRANSPORT_WIFI")
 //                    Toast.makeText(context, "wifi", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    Log.i("errtest", "NetworkCapabilities.TRANSPORT_ETHERNET")
 //                    Toast.makeText(context, "ethernet", Toast.LENGTH_SHORT).show()
                     return true
                 }

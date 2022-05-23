@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_weather">
+    android:background="@drawable/back_weather">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
@@ -21,6 +21,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:checked="false"
+            android:textColor="@color/black"
             android:text="@string/zip"
             android:textOff="@string/off"
             android:textOn="@string/on"
@@ -34,11 +35,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/black"
             android:hint="@string/search_by"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ic_baseline_search_24"
+            app:boxStrokeColor="@color/black"
             app:endIconMode="custom"
             app:helperText="символов введено:"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,11 +60,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25sp"
-            android:gravity="center"
+            android:gravity="start"
             android:shadowColor="@color/black"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="3"
+            android:text="Город"
             android:textColor="#A59F61"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -103,8 +107,8 @@
 
         <TextView
             android:id="@+id/temperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="245dp"
+            android:layout_height="90dp"
             android:gravity="center"
             android:shadowColor="@color/black"
             android:shadowDx="3"
@@ -117,26 +121,48 @@
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@+id/cityName" />
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/todo"
+        <TextView
+            android:id="@+id/currentCondition"
+            android:layout_width="116dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="36dp"
+            android:shadowColor="@color/black"
             android:gravity="center"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Переменная облачность"
+            android:textColor="#10431B"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.979"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature" />
+            app:layout_constraintTop_toTopOf="@+id/icon" />
+
+        <TextView
+            android:id="@+id/tomorrow"
+            android:layout_width="181dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="88dp"
+            android:gravity="center"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:text="завтра днём: +19°С\nпеременная облачность"
+            android:textColor="#E6D005"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/windSpeed"
             android:layout_width="120dp"
             android:layout_height="20dp"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:layout_marginTop="10dp"
             android:text="@string/wind_speed"
-            android:textColor="#49D895"
+            android:textColor="#10431B"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperature" />
@@ -147,11 +173,9 @@
             android:layout_height="38dp"
             android:layout_marginTop="5dp"
             android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+
             android:text="@string/_8_5_mph"
-            android:textColor="#1432C3"
+            android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -161,47 +185,31 @@
             android:id="@+id/humidity"
             android:layout_width="120dp"
             android:layout_height="20dp"
-            android:gravity="end"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
             android:text="@string/humidity"
-            android:textColor="#49D895"
+            android:textColor="#10431B"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wind" />
 
         <TextView
             android:id="@+id/humidityVal"
             android:layout_width="115dp"
             android:layout_height="38dp"
-            android:layout_marginStart="248dp"
             android:layout_marginTop="5dp"
-            android:gravity="end"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
             android:text="@string/_54"
-            android:textColor="#1432C3"
+            android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/cardViewContainer"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/humidity" />
 
         <TextView
             android:id="@+id/sunrise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:gravity="start"
             android:text="@string/time_of_sunrise"
-            android:textColor="#49D895"
+            android:textColor="#10431B"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/humidityVal" />
@@ -211,13 +219,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:gravity="start"
             android:text="@string/_3_26_2021_2_00_00_pm_utc"
-            android:textColor="#1432C3"
+            android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -228,13 +232,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:gravity="start"
             android:text="@string/time_of_sunset"
-            android:textColor="#49D895"
+            android:textStyle="bold"
+            android:textColor="#10431B"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunriseVal" />
 
@@ -243,13 +244,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_top"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:gravity="start"
             android:text="@string/_3_27_2021_2_26_00_am_utc"
-            android:textColor="#1432C3"
+            android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -259,19 +256,14 @@
             android:id="@+id/versionNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:gravity="end"
-            android:shadowColor="@color/black"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+
             android:text="Версия: 1.1.0.2"
-            android:textColor="@color/teal_200"
+            android:textColor="#233230"
             android:textSize="10sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/sunsetVal" />
+            app:layout_constraintTop_toBottomOf="@+id/sunsetVal"
+            tools:layout_editor_absoluteX="16dp" />
 
         <FrameLayout
             android:id="@+id/loadingLayout"
@@ -291,6 +283,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
         </FrameLayout>
 
         <ImageView
@@ -302,8 +295,19 @@
             android:src="@drawable/gps"
             app:layout_constraintBottom_toTopOf="@+id/input_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/switch_compat" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="76dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.884"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

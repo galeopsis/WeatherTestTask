@@ -24,7 +24,8 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
-import com.galeopsis.weatherapp.model.repository.WeatherRepository
+import com.galeopsis.weatherapp.model.FInfo
+import com.galeopsis.weatherapp.model.data.forecastResponse.RResponse
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
@@ -32,8 +33,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.neovisionaries.i18n.CountryCode
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
-class WeatherMainFragment : Fragment() {
+class WeatherMainFragment (): Fragment() {
 
     companion object {
         fun newInstance() = WeatherMainFragment()
@@ -192,13 +194,8 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun setCity() {
-        val city = binding.cityName.text
-        if (latitude.isNotEmpty()) validate(
-            "lat=$latitude&lon=$longtitude",
-            "coordinates"
-        ) else validate(city as String, "name")
-        Log.d("errtest", "onViewCreated: $latitude $longtitude $city")
-
+        getLastLocation()
+        validate("lat=$latitude&lon=$longtitude", "coordinates")
     }
 
     private fun WeatherMainFragmentBinding.deleteSpace(): String {
@@ -206,6 +203,7 @@ class WeatherMainFragment : Fragment() {
             it == ' '
         }
     }
+
 
     private fun validate(inputData: String, method: String) {
         activity?.let { it1 -> dismissKeyboard(it1) }
@@ -215,7 +213,6 @@ class WeatherMainFragment : Fragment() {
             initData()
         } else {
             fetchData()
-
         }
     }
 
@@ -228,15 +225,11 @@ class WeatherMainFragment : Fragment() {
     }
 
     private fun initData() {
-
         mainViewModel.loadingState.observe(viewLifecycleOwner) {
             when (it.status) {
                 LoadingState.Status.FAILED -> {
-                    /*Toast.makeText(context, "Ошибка запроса, попробуйте снова", Toast.LENGTH_SHORT)
-                        .show()*/
                     binding.loadingLayout.visibility = View.GONE
                 }
-
                 LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
                 LoadingState.Status.SUCCESS -> {
@@ -252,17 +245,18 @@ class WeatherMainFragment : Fragment() {
             mainViewModel.data.observe(viewLifecycleOwner) {
                 it?.forEach { weatherData ->
                     with(binding) {
-                        val countryCode = CountryCode.getByCode(weatherData.sys?.country)
-                        val country = countryCode.getName()
+                        validate("lat=$latitude&lon=$longtitude", "forecast")
+                        val dTemp = FInfo.dTemp
+                        val dDescription = FInfo.dDescription
+                        Log.d("foretest", FInfo.dTemp!!)
                         val textToTrim =
                             (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
+                        tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
-//                    currentCondition.text = description
-//                    cityName.text = weatherData.name
+                        currentCondition.text = description
                         if (weatherData.name == "Бадалык") cityName.text =
                             "Красноярск" else cityName.text = weatherData.name
-//                    cityName.text = weatherData.name
                         temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                         wind.text = (weatherData.wind?.speed.toString() + " м/с")
                         humidityVal.text = (weatherData.main?.humidity.toString() + " %")
@@ -271,7 +265,6 @@ class WeatherMainFragment : Fragment() {
                                 it1
                             )
                         }
-//                    Log.d("gpstest", "${weatherData.name} ${(weatherData.main?.temp?.toInt()).toString()}°С $latitude $longtitude")
                         sunsetVal.text = weatherData.timezone?.let { it1 ->
                             weatherData.sys?.sunset?.unixTimestampToTimeString(
                                 it1
@@ -303,17 +296,14 @@ class WeatherMainFragment : Fragment() {
             when {
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_CELLULAR")
-//                    Toast.makeText(context, "mobile", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_WIFI")
-//                    Toast.makeText(context, "wifi", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_ETHERNET")
-//                    Toast.makeText(context, "ethernet", Toast.LENGTH_SHORT).show()
                     return true
                 }
             }

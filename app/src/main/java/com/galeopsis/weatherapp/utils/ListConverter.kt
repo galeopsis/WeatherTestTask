@@ -20,8 +20,7 @@ class ListConverter {
     @TypeConverter
     fun jsonToList(json: String?): List<Weather>? {
         val gson = Gson()
-        val type =
-            object : TypeToken<List<Weather?>?>() {}.type
+        val type = object : TypeToken<List<Weather?>?>() {}.type
         return gson.fromJson<List<Weather>>(json, type)
     }
 }

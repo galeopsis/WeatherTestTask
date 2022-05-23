@@ -252,7 +252,7 @@ class WeatherMainFragment (): Fragment() {
                         val textToTrim =
                             (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
-                        tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
+                        tomorrow.text = "завтра в это же время: \n${dTemp}°С\n${dDescription}"
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
                         currentCondition.text = description
                         if (weatherData.name == "Бадалык") cityName.text =

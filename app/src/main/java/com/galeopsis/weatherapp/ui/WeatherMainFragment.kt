@@ -246,7 +246,7 @@ class WeatherMainFragment (): Fragment() {
                 it?.forEach { weatherData ->
                     with(binding) {
                         validate("lat=$latitude&lon=$longtitude", "forecast")
-                        val dTemp = FInfo.dTemp?.toInt()
+                        val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
                         Log.d("foretest", FInfo.dTemp!!)
                         val textToTrim =

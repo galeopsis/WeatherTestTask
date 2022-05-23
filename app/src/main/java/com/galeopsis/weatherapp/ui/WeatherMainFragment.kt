@@ -56,6 +56,7 @@ class WeatherMainFragment (): Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -245,14 +246,18 @@ class WeatherMainFragment (): Fragment() {
             mainViewModel.data.observe(viewLifecycleOwner) {
                 it?.forEach { weatherData ->
                     with(binding) {
-                        validate("lat=$latitude&lon=$longtitude", "forecast")
-                        val dTemp = FInfo.dTemp
-                        val dDescription = FInfo.dDescription
+
                         Log.d("foretest", FInfo.dTemp!!)
                         val textToTrim =
                             (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
-                        tomorrow.text = "завтра в это же время: \n${dTemp}°С\n${dDescription}"
+
+                        validate("lat=$latitude&lon=$longtitude", "forecast")
+                        Thread.sleep(3000)
+                        val dTemp = FInfo.dTemp
+                        val dDescription = FInfo.dDescription
+                        binding.tomorrow.text = "завтра в это же время: \n${dTemp}°С\n${dDescription}"
+
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
                         currentCondition.text = description
                         if (weatherData.name == "Бадалык") cityName.text =

@@ -61,9 +61,9 @@ class WeatherMainFragment (): Fragment() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        fetchData()
         setCity()
         initListeners()
-        fetchData()
 
     }
 

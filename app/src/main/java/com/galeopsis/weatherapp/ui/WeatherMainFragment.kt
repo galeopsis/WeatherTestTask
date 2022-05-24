@@ -63,7 +63,6 @@ class WeatherMainFragment (): Fragment() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         fetchData()
-        setCity()
         initListeners()
 
     }
@@ -187,16 +186,7 @@ class WeatherMainFragment (): Fragment() {
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
-        if (inputText.isNotEmpty()) {
             validate(inputText, method)
-        } else {
-            setCity()
-        }
-    }
-
-    private fun setCity() {
-        getLastLocation()
-        validate("lat=$latitude&lon=$longtitude", "coordinates")
     }
 
     private fun WeatherMainFragmentBinding.deleteSpace(): String {
@@ -204,7 +194,6 @@ class WeatherMainFragment (): Fragment() {
             it == ' '
         }
     }
-
 
     private fun validate(inputData: String, method: String) {
         activity?.let { it1 -> dismissKeyboard(it1) }
@@ -252,11 +241,13 @@ class WeatherMainFragment (): Fragment() {
                             (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
 
-                        validate("lat=$latitude&lon=$longtitude", "forecast")
+                        val lat =weatherData.coord?.lat
+                        val lon =weatherData.coord?.lon
+                            validate("lat=$lat&lon=$lon", "forecast")
                         Thread.sleep(3000)
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
-                        binding.tomorrow.text = "завтра в это же время: \n${dTemp}°С\n${dDescription}"
+                        binding.tomorrow.text = "завтра: ${dTemp}°С\n${dDescription}"
 
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
                         currentCondition.text = description

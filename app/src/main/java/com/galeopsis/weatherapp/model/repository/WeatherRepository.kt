@@ -47,9 +47,9 @@ class WeatherRepository(
                     val lat = lat1.substringBefore("&")
                     val lon = data.substringAfterLast("=")
                     val weatherData = weatherApi.getForecastAsync(API_KEY, lat, lon).await()
-                    FInfo.dTemp = weatherData.list[10].main.temp?.toInt().toString()
+                    FInfo.dTemp = weatherData.list[8].main.temp?.toInt().toString()
                     FInfo.dDescription =
-                        weatherData.list[10].weather[0]?.description.toString()
+                        weatherData.list[8].weather[0]?.description.toString()
 //                    Log.d("foreInfo", "${weatherData.list[10].main.temp}")
                     Log.d("foreInfo", "${FInfo.dTemp}")
                 }

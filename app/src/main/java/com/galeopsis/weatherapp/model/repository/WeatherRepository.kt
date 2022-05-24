@@ -5,7 +5,6 @@ import com.galeopsis.weatherapp.BuildConfig.API_KEY
 import com.galeopsis.weatherapp.model.FInfo
 import com.galeopsis.weatherapp.model.api.WeatherApi
 import com.galeopsis.weatherapp.model.dao.WeatherDao
-import com.galeopsis.weatherapp.model.data.forecastResponse.RInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -41,17 +40,31 @@ class WeatherRepository(
                     weatherDao.add(weatherData)
                 }
                 "forecast" -> {
-                    /*val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                    val currentDate = sdf.format(Date())*/
+                    val sdf = SimpleDateFormat("!yyyy-MM-dd hh:mm:ss")
+                    val cD = sdf.format(Date())
+                    val forecastArray = mutableListOf<String>()
+                    val l1 = cD.substringBefore(" ")
+                    val currentDay = l1.substringAfterLast("-").toInt()
                     val lat1 = data.substringAfter("=")
                     val lat = lat1.substringBefore("&")
                     val lon = data.substringAfterLast("=")
                     val weatherData = weatherApi.getForecastAsync(API_KEY, lat, lon).await()
-                    FInfo.dTemp = weatherData.list[8].main.temp?.toInt().toString()
-                    FInfo.dDescription =
-                        weatherData.list[8].weather[0]?.description.toString()
-//                    Log.d("foreInfo", "${weatherData.list[10].main.temp}")
-                    Log.d("foreInfo", "${FInfo.dTemp}")
+                    for (i in 0 until weatherData.list.size) {
+                        val x1 = weatherData.list[i].dtTxt.substringBefore(" ")
+                        val x2 = x1.substringAfterLast("-").toInt()
+                        if (x2 == (currentDay + 1)) {
+                            forecastArray.add(weatherData.list[i].dtTxt)
+                            forecastArray.add(weatherData.list[i].main.temp?.toInt().toString())
+                            forecastArray.add(weatherData.list[i].weather[0]?.description.toString())
+                        }
+                    }
+                    val tomorrowTempAt15 = forecastArray[16]
+                    val tomorrowDescAt15 = forecastArray[17]
+                    Log.d("foreInfo", "${forecastArray.toList()}")
+                    Log.d("foreInfo", "$tomorrowTempAt15, $tomorrowDescAt15")
+
+                    FInfo.dTemp = tomorrowTempAt15
+                    FInfo.dDescription = tomorrowDescAt15
                 }
                 else -> {}
             }

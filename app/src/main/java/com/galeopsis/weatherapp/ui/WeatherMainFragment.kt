@@ -247,7 +247,7 @@ class WeatherMainFragment (): Fragment() {
                         Thread.sleep(3000)
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
-                        binding.tomorrow.text = "завтра: ${dTemp}°С\n${dDescription}"
+                        binding.tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
 
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
                         currentCondition.text = description

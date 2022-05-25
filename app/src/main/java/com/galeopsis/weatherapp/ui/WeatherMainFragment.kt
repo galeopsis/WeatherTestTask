@@ -251,7 +251,7 @@ class WeatherMainFragment (): Fragment() {
                             "Красноярск" else cityName.text = weatherData.name
                         cityName.visibility = View.VISIBLE
 //                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
-                        temperature.text = ("+$temp °С")
+                        temperature.text = ("+$temp°С")
                         temperature.visibility = View.VISIBLE
                         wind.text = (weatherData.wind?.speed.toString() + " м/с")
                         windSpeed.visibility = View.VISIBLE

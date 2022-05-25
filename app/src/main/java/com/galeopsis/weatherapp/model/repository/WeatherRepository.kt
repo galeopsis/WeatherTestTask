@@ -36,11 +36,13 @@ class WeatherRepository(
                     val lon = data.substringAfterLast("=")
                     val weatherData =
                         weatherApi.getWeatherByCoordinatesAsync(API_KEY, lat, lon).await()
+                    FInfo.lat = lat
+                    FInfo.lon = lon
                     weatherDao.deleteAllData()
                     weatherDao.add(weatherData)
                 }
                 "forecast" -> {
-                    val sdf = SimpleDateFormat("!yyyy-MM-dd hh:mm:ss")
+                    val sdf = SimpleDateFormat("!yyyy-MM-dd hh:mm:ss", Locale.getDefault())
                     val cD = sdf.format(Date())
                     val forecastArray = mutableListOf<String>()
                     val l1 = cD.substringBefore(" ")
@@ -65,6 +67,7 @@ class WeatherRepository(
 
                     FInfo.dTemp = tomorrowTempAt15
                     FInfo.dDescription = tomorrowDescAt15
+                    FInfo.mainTemp = weatherData.list[0].main.temp?.toInt().toString()
                 }
                 else -> {}
             }

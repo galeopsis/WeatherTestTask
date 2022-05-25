@@ -25,15 +25,12 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.galeopsis.weatherapp.databinding.WeatherMainFragmentBinding
 import com.galeopsis.weatherapp.model.FInfo
-import com.galeopsis.weatherapp.model.data.forecastResponse.RResponse
 import com.galeopsis.weatherapp.utils.LoadingState
 import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import com.galeopsis.weatherapp.viewmodel.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.neovisionaries.i18n.CountryCode
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class WeatherMainFragment (): Fragment() {
 
@@ -152,7 +149,7 @@ class WeatherMainFragment (): Fragment() {
 
     private fun initListeners() {
         with(binding) {
-            gps.setOnClickListener{
+            gps.setOnClickListener {
                 getLastLocation()
             }
             inputLayout
@@ -186,7 +183,7 @@ class WeatherMainFragment (): Fragment() {
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
-            validate(inputText, method)
+        if (inputText.isNotEmpty()) validate(inputText, method) else return
     }
 
     private fun WeatherMainFragmentBinding.deleteSpace(): String {
@@ -199,10 +196,9 @@ class WeatherMainFragment (): Fragment() {
         activity?.let { it1 -> dismissKeyboard(it1) }
         context?.let { isOnline(it) }
         if (context?.let { isOnline(it) } == true) {
+            Log.d("foreInfo", "отправлен http запрос $inputData $method")
             mainViewModel.fetchData(inputData, method)
             initData()
-        } else {
-            fetchData()
         }
     }
 
@@ -235,15 +231,14 @@ class WeatherMainFragment (): Fragment() {
             mainViewModel.data.observe(viewLifecycleOwner) {
                 it?.forEach { weatherData ->
                     with(binding) {
-
                         Log.d("foretest", FInfo.dTemp!!)
                         val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
-                        val lat =weatherData.coord?.lat
-                        val lon =weatherData.coord?.lon
+                        val lat = weatherData.coord?.lat
+                        val lon = weatherData.coord?.lon
                         validate("lat=$lat&lon=$lon", "forecast")
-                        validate("lat=$lat&lon=$lon", "coordinates")
                         Thread.sleep(3000)
+                        val temp = FInfo.mainTemp
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
                         binding.tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
@@ -255,7 +250,8 @@ class WeatherMainFragment (): Fragment() {
                         if (weatherData.name == "Бадалык") cityName.text =
                             "Красноярск" else cityName.text = weatherData.name
                         cityName.visibility = View.VISIBLE
-                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+//                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                        temperature.text = ("$temp +  °С")
                         temperature.visibility = View.VISIBLE
                         wind.text = (weatherData.wind?.speed.toString() + " м/с")
                         windSpeed.visibility = View.VISIBLE

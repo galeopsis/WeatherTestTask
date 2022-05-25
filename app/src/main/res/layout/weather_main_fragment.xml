@@ -65,7 +65,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="3"
-            android:text="Город"
+            android:text="           ПОГОДА"
             android:textColor="#A59F61"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -118,6 +118,7 @@
             android:textColor="#E6D005"
             android:textSize="70sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@+id/cityName" />
 
@@ -133,6 +134,7 @@
             android:shadowRadius="2"
             android:text="Переменная облачность"
             android:textColor="#10431B"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.979"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +153,7 @@
             android:text="завтра днём: +19°С\nпеременная облачность"
             android:textColor="#E6D005"
             android:textSize="19sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.958"
             app:layout_constraintStart_toStartOf="parent"
@@ -164,6 +167,7 @@
             android:text="@string/wind_speed"
             android:textColor="#10431B"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
@@ -172,8 +176,8 @@
             android:layout_width="115dp"
             android:layout_height="38dp"
             android:layout_marginTop="5dp"
+            android:visibility="invisible"
             android:shadowColor="@color/black"
-
             android:text="@string/_8_5_mph"
             android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
@@ -188,6 +192,7 @@
             android:text="@string/humidity"
             android:textColor="#10431B"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wind" />
 
@@ -198,6 +203,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/_54"
             android:textColor="#AF727E"
+            android:visibility="invisible"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -209,6 +215,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/time_of_sunrise"
+            android:visibility="invisible"
             android:textColor="#10431B"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -224,6 +231,7 @@
             android:textColor="#AF727E"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunrise" />
 
@@ -234,6 +242,7 @@
             android:layout_marginTop="5dp"
             android:gravity="start"
             android:text="@string/time_of_sunset"
+            android:visibility="invisible"
             android:textStyle="bold"
             android:textColor="#10431B"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -247,6 +256,7 @@
             android:gravity="start"
             android:text="@string/_3_27_2021_2_26_00_am_utc"
             android:textColor="#AF727E"
+            android:visibility="invisible"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
@@ -257,7 +267,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-
+            android:visibility="invisible"
             android:text="Версия: 1.1.0.2"
             android:textColor="#233230"
             android:textSize="10sp"

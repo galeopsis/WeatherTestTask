@@ -230,7 +230,7 @@ class WeatherMainFragment (): Fragment() {
             mainViewModel.data.observe(viewLifecycleOwner) {
                 it?.forEach { weatherData ->
                     with(binding) {
-                        Log.d("foretest", FInfo.dTemp!!)
+                        Log.d("foretest", FInfo.dTempTomorrow!!)
                         val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
                         val lat = weatherData.coord?.lat
@@ -240,12 +240,38 @@ class WeatherMainFragment (): Fragment() {
                         val temp = FInfo.mainTemp
                         val rWind = FInfo.wind
                         val rHumidity = FInfo.humidity
-                        val dTemp = FInfo.dTemp
-                        val dDescription = FInfo.dDescription
-                        binding.tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
+                        val dTempTomorrow = FInfo.dTempTomorrow
+                        val dDescriptionTomorrow = FInfo.dDescriptionTomorrow
+
+                        val dTempAfterTomorrow = FInfo.dTempAfterTomorrow
+                        val dDescriptionAfterTomorrow = FInfo.dDescriptionAfterTomorrow
+                        val dTempAfterAfterTomorrow = FInfo.dTempAfterAfterTomorrow
+                        val dDescriptionAfterAfterTomorrow = FInfo.dDescriptionAfterAfterTomorrow
+
+                        val val1 = "$dTempTomorrow°C\n$dDescriptionTomorrow"
+                        val val2 = "$dTempAfterTomorrow°С\n$dDescriptionAfterTomorrow"
+                        val val3 = "$dTempAfterAfterTomorrow°С\n$dDescriptionAfterAfterTomorrow"
+
+                        tomorrowDate.text = FInfo.tomorrowDate
+                        tomorrow.text = val1
+
+                        tomorrowAfterDate.text = FInfo.tomorrowAfterDate
+                        tomorrowAfter.text = val2
+
+                        tomorrowAfterAfterDate.text = FInfo.tomorrowAfterAfterDate
+                        tomorrowAfterAfter.text = val3
+
+                        tomorrowDate.visibility = View.VISIBLE
                         tomorrow.visibility = View.VISIBLE
+
+                        tomorrowAfterDate.visibility = View.VISIBLE
+                        tomorrowAfter.visibility = View.VISIBLE
+
+                        tomorrowAfterAfterDate.visibility = View.VISIBLE
+                        tomorrowAfterAfter.visibility = View.VISIBLE
+
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
-                        versionNumber.visibility = View.VISIBLE
+
                         currentCondition.text = description
                         currentCondition.visibility = View.VISIBLE
                         if (weatherData.name == "Бадалык") cityName.text =

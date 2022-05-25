@@ -242,6 +242,7 @@ class WeatherMainFragment (): Fragment() {
                         val lat =weatherData.coord?.lat
                         val lon =weatherData.coord?.lon
                         validate("lat=$lat&lon=$lon", "forecast")
+                        validate("lat=$lat&lon=$lon", "coordinates")
                         Thread.sleep(3000)
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription

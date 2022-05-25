@@ -63,11 +63,14 @@ class WeatherRepository(
                     val tomorrowTempAt15 = forecastArray[16]
                     val tomorrowDescAt15 = forecastArray[17]
                     Log.d("foreInfo", "${forecastArray.toList()}")
-                    Log.d("foreInfo", "$tomorrowTempAt15, $tomorrowDescAt15")
 
                     FInfo.dTemp = tomorrowTempAt15
                     FInfo.dDescription = tomorrowDescAt15
                     FInfo.mainTemp = weatherData.list[0].main.temp?.toInt().toString()
+                    FInfo.humidity = weatherData.list[0].main.humidity.toString()
+                    FInfo.wind = weatherData.list[0].wind.speed.toInt().toString()
+                    Log.d("foreInfo", "$tomorrowTempAt15, $tomorrowDescAt15 wind {FInfo.wind} hum ${FInfo.humidity}")
+
                 }
                 else -> {}
             }

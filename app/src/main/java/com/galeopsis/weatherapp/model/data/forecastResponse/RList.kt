@@ -13,6 +13,6 @@ data class RList(
     val RRain: RRain,
     val RSys: RSys,
     val visibility: Int,
-    val RWind: RWind,
+    val wind: RWind,
     val weather: List<RWeather?>
 )

@@ -6,4 +6,6 @@ object FInfo {
     var dDescription: String? = ""
     var lat: String? = ""
     var lon: String? = ""
+    var humidity: String? = ""
+    var wind: String? = ""
 }

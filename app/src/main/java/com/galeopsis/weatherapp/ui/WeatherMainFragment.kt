@@ -13,7 +13,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.provider.Settings
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -239,6 +238,8 @@ class WeatherMainFragment (): Fragment() {
                         validate("lat=$lat&lon=$lon", "forecast")
                         Thread.sleep(3000)
                         val temp = FInfo.mainTemp
+                        val rWind = FInfo.wind
+                        val rHumidity = FInfo.humidity
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
                         binding.tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
@@ -253,10 +254,10 @@ class WeatherMainFragment (): Fragment() {
 //                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                         temperature.text = ("+$temp°С")
                         temperature.visibility = View.VISIBLE
-                        wind.text = (weatherData.wind?.speed.toString() + " м/с")
+                        wind.text = (rWind + " м/с")
                         windSpeed.visibility = View.VISIBLE
                         wind.visibility = View.VISIBLE
-                        humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                        humidityVal.text = (rHumidity + " %")
                         humidity.visibility = View.VISIBLE
                         humidityVal.visibility = View.VISIBLE
                         sunriseVal.text = weatherData.timezone?.let { it1 ->

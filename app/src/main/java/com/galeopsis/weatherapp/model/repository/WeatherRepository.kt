@@ -20,11 +20,11 @@ class WeatherRepository(
     suspend fun refresh(data: String, method: String) {
         withContext(Dispatchers.IO) {
             when (method) {
-                "zip" -> {
+               /* "zip" -> {
                     val weatherData = weatherApi.getWeatherByZipCodeAsync(API_KEY, data).await()
                     weatherDao.deleteAllData()
                     weatherDao.add(weatherData)
-                }
+                }*/
                 "name" -> {
                     val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()
                     weatherDao.deleteAllData()

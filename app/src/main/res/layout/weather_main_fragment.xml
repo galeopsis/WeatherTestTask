@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <androidx.appcompat.widget.SwitchCompat
+       <!-- <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_compat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textOn="@string/on"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/cardViewContainer"
-            app:showText="true" />
+            app:showText="true" />-->
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -35,18 +35,19 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
+            android:layout_marginEnd="60dp"
             android:hint="@string/search_by"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/black"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ic_baseline_search_24"
-            app:boxStrokeColor="@color/black"
             app:endIconMode="custom"
             app:helperText="символов введено:"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/switch_compat">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_text"
@@ -297,13 +298,14 @@
             android:id="@+id/gps"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/gps"
-            app:layout_constraintBottom_toTopOf="@+id/input_layout"
+            app:layout_constraintBottom_toTopOf="@+id/cityName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/switch_compat" />
+            app:layout_constraintHorizontal_bias="0.652"
+            app:layout_constraintStart_toEndOf="@+id/input_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.240" />
 
         <ImageView
             android:id="@+id/icon"

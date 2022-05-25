@@ -157,7 +157,7 @@ class WeatherMainFragment (): Fragment() {
                     searchByName("name")
                 }
 
-            switchCompat.setOnCheckedChangeListener { _, isChecked ->
+            /*switchCompat.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     inputEditText.inputType = InputType.TYPE_CLASS_NUMBER
                     inputLayout
@@ -171,15 +171,15 @@ class WeatherMainFragment (): Fragment() {
                             searchByName("name")
                         }
                 }
-            }
+            }*/
         }
     }
 
-    private fun WeatherMainFragmentBinding.searchByZip(method: String) {
+    /*private fun WeatherMainFragmentBinding.searchByZip(method: String) {
         val inputText = deleteSpace()
         val inputData = "$inputText,ru"
         validate(inputData, method)
-    }
+    }*/
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()

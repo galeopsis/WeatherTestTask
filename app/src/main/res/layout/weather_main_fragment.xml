@@ -65,7 +65,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="3"
-            android:text="           ПОГОДА"
+            android:text="ПОГОДА"
             android:textColor="#A59F61"
             android:textSize="40sp"
             android:textStyle="bold"

@@ -237,36 +237,45 @@ class WeatherMainFragment (): Fragment() {
                     with(binding) {
 
                         Log.d("foretest", FInfo.dTemp!!)
-                        val textToTrim =
-                            (weatherData.weather.toString()).substringAfter("description=")
+                        val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
-
                         val lat =weatherData.coord?.lat
                         val lon =weatherData.coord?.lon
-                            validate("lat=$lat&lon=$lon", "forecast")
+                        validate("lat=$lat&lon=$lon", "forecast")
                         Thread.sleep(3000)
                         val dTemp = FInfo.dTemp
                         val dDescription = FInfo.dDescription
                         binding.tomorrow.text = "завтра днём: ${dTemp}°С\n${dDescription}"
-
+                        tomorrow.visibility = View.VISIBLE
                         versionNumber.text = "Версия приложения: ${getVersion(requireContext())}"
+                        versionNumber.visibility = View.VISIBLE
                         currentCondition.text = description
+                        currentCondition.visibility = View.VISIBLE
                         if (weatherData.name == "Бадалык") cityName.text =
                             "Красноярск" else cityName.text = weatherData.name
+                        cityName.visibility = View.VISIBLE
                         temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
+                        temperature.visibility = View.VISIBLE
                         wind.text = (weatherData.wind?.speed.toString() + " м/с")
+                        windSpeed.visibility = View.VISIBLE
+                        wind.visibility = View.VISIBLE
                         humidityVal.text = (weatherData.main?.humidity.toString() + " %")
+                        humidity.visibility = View.VISIBLE
+                        humidityVal.visibility = View.VISIBLE
                         sunriseVal.text = weatherData.timezone?.let { it1 ->
                             weatherData.sys?.sunrise?.unixTimestampToTimeString(
                                 it1
                             )
                         }
+                        sunrise.visibility = View.VISIBLE
+                        sunriseVal.visibility = View.VISIBLE
                         sunsetVal.text = weatherData.timezone?.let { it1 ->
                             weatherData.sys?.sunset?.unixTimestampToTimeString(
                                 it1
                             )
                         }
-
+                        sunsetVal.visibility = View.VISIBLE
+                        sunset.visibility = View.VISIBLE
                         val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
                         val iconData = iconToTrim.substringBefore(')')
                         val iconUrl = "https://openweathermap.org/img/w/$iconData.png"

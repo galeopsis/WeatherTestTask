@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_weather">
+    android:background="@drawable/b_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="60dp"
             android:hint="@string/search_by"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
+            android:textColorHint="#3F89E0"
+            app:boxStrokeColor="#3F89E0"
             app:counterEnabled="false"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
@@ -133,37 +133,37 @@
             android:shadowDy="1"
             android:shadowRadius="2"
             android:text="Переменная облачность"
-            android:textColor="#10431B"
+            android:textColor="#3F89E0"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.979"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/icon" />
 
-        <TextView
-            android:id="@+id/tomorrowDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="108dp"
-            android:gravity="center|top"
-            android:text="26.05"
-            android:textColor="#555434"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/temperature" />
+     <TextView
+         android:id="@+id/tomorrowDate"
+         android:layout_width="190dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="100dp"
+         android:gravity="center|top"
+         android:text="26.05"
+         android:textColor="#81C784"
+         android:textSize="15sp"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.855"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/temperature" />
 
-        <TextView
+     <TextView
             android:id="@+id/tomorrow"
             android:layout_width="200dp"
             android:layout_height="75dp"
             android:layout_marginTop="5dp"
             android:gravity="center|top"
             android:text="+19°С\nпеременная облачность"
-            android:textColor="#022BA1"
+            android:textColor="#3F89E0"
             android:textSize="20sp"
             android:textStyle="bold|italic"
             android:visibility="invisible"
@@ -172,21 +172,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tomorrowDate" />
 
-        <TextView
-            android:id="@+id/tomorrowAfterDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center|top"
-            android:text="27.05"
-            android:textColor="#555434"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrow" />
+     <TextView
+         android:id="@+id/tomorrowAfterDate"
+         android:layout_width="190dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="10dp"
+         android:gravity="center|top"
+         android:text="27.05"
+         android:textColor="#81C784"
+         android:textSize="15sp"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.914"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/tomorrow" />
 
         <TextView
             android:id="@+id/tomorrowAfter"
@@ -195,7 +195,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center|top"
             android:text="+19°С\nпеременная облачность"
-            android:textColor="#022BA1"
+            android:textColor="#3F89E0"
             android:textSize="20sp"
             android:textStyle="bold|italic"
             android:visibility="invisible"
@@ -204,21 +204,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterDate" />
 
-        <TextView
-            android:id="@+id/tomorrowAfterAfterDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="28.05"
-            android:textColor="#555434"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowAfter" />
+     <TextView
+         android:id="@+id/tomorrowAfterAfterDate"
+         android:layout_width="190dp"
+         android:layout_height="22dp"
+         android:layout_marginTop="5dp"
+         android:gravity="center|top"
+         android:text="28.05"
+         android:textColor="#81C784"
+         android:textSize="15sp"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.914"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/tomorrowAfter" />
 
         <TextView
             android:id="@+id/tomorrowAfterAfter"
@@ -227,7 +227,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center|top"
             android:text="+19°С\nпеременная облачность"
-            android:textColor="#022BA1"
+            android:textColor="#3F89E0"
             android:textSize="20sp"
             android:textStyle="bold|italic"
             android:visibility="invisible"
@@ -237,18 +237,17 @@
             app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterAfterDate" />
 
 
-
-        <TextView
-            android:id="@+id/windSpeed"
-            android:layout_width="120dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/wind_speed"
-            android:textColor="#10431B"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature" />
+     <TextView
+         android:id="@+id/windSpeed"
+         android:layout_width="120dp"
+         android:layout_height="20dp"
+         android:layout_marginTop="10dp"
+         android:text="@string/wind_speed"
+         android:textColor="#81C784"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/wind"
@@ -258,22 +257,22 @@
             android:visibility="invisible"
             android:shadowColor="@color/black"
             android:text="@string/_8_5_mph"
-            android:textColor="#AF727E"
+            android:textColor="#3F89E0"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/windSpeed" />
 
-        <TextView
-            android:id="@+id/humidity"
-            android:layout_width="120dp"
-            android:layout_height="20dp"
-            android:text="@string/humidity"
-            android:textColor="#10431B"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wind" />
+     <TextView
+         android:id="@+id/humidity"
+         android:layout_width="120dp"
+         android:layout_height="20dp"
+         android:text="@string/humidity"
+         android:textColor="#81C784"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/wind" />
 
         <TextView
             android:id="@+id/humidityVal"
@@ -281,24 +280,24 @@
             android:layout_height="38dp"
             android:layout_marginTop="5dp"
             android:text="@string/_54"
-            android:textColor="#AF727E"
+            android:textColor="#3F89E0"
             android:visibility="invisible"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/humidity" />
 
-        <TextView
-            android:id="@+id/sunrise"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/time_of_sunrise"
-            android:visibility="invisible"
-            android:textColor="#10431B"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/humidityVal" />
+     <TextView
+         android:id="@+id/sunrise"
+         android:layout_width="120dp"
+         android:layout_height="wrap_content"
+         android:gravity="start"
+         android:text="@string/time_of_sunrise"
+         android:textColor="#81C784"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintStart_toStartOf="@id/cardViewContainer"
+         app:layout_constraintTop_toBottomOf="@id/humidityVal" />
 
         <TextView
             android:id="@+id/sunriseVal"
@@ -307,25 +306,25 @@
             android:layout_marginTop="@dimen/app_margin_top"
             android:gravity="start"
             android:text="04:19:05"
-            android:textColor="#AF727E"
+            android:textColor="#3F89E0"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@id/cardViewContainer"
             app:layout_constraintTop_toBottomOf="@id/sunrise" />
 
-        <TextView
-            android:id="@+id/sunset"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="start"
-            android:text="@string/time_of_sunset"
-            android:visibility="invisible"
-            android:textStyle="bold"
-            android:textColor="#10431B"
-            app:layout_constraintStart_toStartOf="@id/cardViewContainer"
-            app:layout_constraintTop_toBottomOf="@id/sunriseVal" />
+     <TextView
+         android:id="@+id/sunset"
+         android:layout_width="120dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp"
+         android:gravity="start"
+         android:text="@string/time_of_sunset"
+         android:textColor="#81C784"
+         android:textStyle="bold"
+         android:visibility="invisible"
+         app:layout_constraintStart_toStartOf="@id/cardViewContainer"
+         app:layout_constraintTop_toBottomOf="@id/sunriseVal" />
 
         <TextView
             android:id="@+id/sunsetVal"
@@ -334,7 +333,7 @@
             android:layout_marginTop="@dimen/app_margin_top"
             android:gravity="start"
             android:text="21:11:52"
-            android:textColor="#AF727E"
+            android:textColor="#3F89E0"
             android:visibility="invisible"
             android:textSize="@dimen/defaultTextSize"
             android:textStyle="bold"
@@ -349,7 +348,7 @@
             android:gravity="end"
             android:visibility="visible"
             android:text="Версия: 1.1.0.2.74"
-            android:textColor="#233230"
+            android:textColor="#3F89E0"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterAfter"
@@ -381,7 +380,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/gps"
+            android:src="@drawable/ic_location_icon"
             app:layout_constraintBottom_toTopOf="@+id/cityName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.652"

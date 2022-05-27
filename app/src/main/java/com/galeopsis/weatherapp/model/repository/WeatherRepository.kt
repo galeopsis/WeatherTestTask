@@ -80,6 +80,14 @@ class WeatherRepository(
                         }
                     }
 
+                    val monday = "понедельник"
+                    val tuesday = "вторник"
+                    val wednesday = "среда"
+                    val thursday = "четверг"
+                    val friday = "пятница"
+                    val saturday = "суббота"
+                    val sunday = "воскресенье"
+
                     val tomorrowTemp = forecastTomorrowArray[16]
                     val tomorrowDesc = forecastTomorrowArray[17]
                     val tomorrowAfterTemp = forecastAfterTomorrowArray[16]
@@ -106,14 +114,17 @@ class WeatherRepository(
                     val dateTomorrow = LocalDate.parse(dTomorrow)
                     val dateAfterTomorrow = LocalDate.parse(dAfterTomorrow)
                     val dateAfterAfterTomorrow = LocalDate.parse(dAfterAfterTomorrow)
-                    val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+                    val formatter = DateTimeFormatter.ofPattern("dd MMMM")
                     val formattedDateTomorrow = dateTomorrow.format(formatter)
+                    val tomorrowDayOfWeek = dateTomorrow.dayOfWeek.toString()
                     val formattedDateAfterTomorrow = dateAfterTomorrow.format(formatter)
+                    val tomorrowAfterDayOfWeek = dateAfterTomorrow.dayOfWeek.toString()
                     val formattedDateAfterAfterTomorrow = dateAfterAfterTomorrow.format(formatter)
+                    val tomorrowAfterAfterDayOfWeek = dateAfterAfterTomorrow.dayOfWeek.toString()
 
-                    FInfo.tomorrowDate = formattedDateTomorrow
-                    FInfo.tomorrowAfterDate = formattedDateAfterTomorrow
-                    FInfo.tomorrowAfterAfterDate = formattedDateAfterAfterTomorrow
+                    FInfo.tomorrowDate = "${translateDayOfWeek(tomorrowDayOfWeek)}, $formattedDateTomorrow "
+                    FInfo.tomorrowAfterDate = "${translateDayOfWeek(tomorrowAfterDayOfWeek)}, $formattedDateAfterTomorrow"
+                    FInfo.tomorrowAfterAfterDate = "${translateDayOfWeek(tomorrowAfterAfterDayOfWeek)}, $formattedDateAfterAfterTomorrow"
 
                     Log.d("foreInfo", "${FInfo.tomorrowDate} ${FInfo.dTempTomorrow}, ${FInfo.dDescriptionTomorrow}")
                     Log.d("foreInfo", "${FInfo.tomorrowAfterDate} ${FInfo.dTempAfterTomorrow}, ${FInfo.dDescriptionAfterTomorrow}")
@@ -123,6 +134,18 @@ class WeatherRepository(
                 else -> {}
             }
         }
+    }
+
+    private fun translateDayOfWeek(date: String): String {
+        var newDate = date
+       if (date == "MONDAY") newDate = "понедельник"
+       if (date == "TUESDAY") newDate = "вторник"
+       if (date == "WEDNESDAY") newDate = "среда"
+       if (date == "THURSDAY") newDate = "четверг"
+       if (date == "FRIDAY") newDate = "пятница"
+       if (date == "SATURDAY") newDate = "суббота"
+       if (date == "SUNDAY") newDate = "воскресенье"
+        return newDate
     }
 }
 

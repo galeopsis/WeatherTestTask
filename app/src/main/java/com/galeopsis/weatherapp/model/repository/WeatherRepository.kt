@@ -47,46 +47,52 @@ class WeatherRepository(
                     weatherDao.add(weatherData)
                 }
                 "forecast" -> {
-                    val sdf = SimpleDateFormat("!yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
                     val cD = sdf.format(Date())
                     val forecastTomorrowArray = mutableListOf<String>()
                     val forecastAfterTomorrowArray = mutableListOf<String>()
                     val forecastAfterAfterTomorrowArray = mutableListOf<String>()
-                    val forecastDaysArray = mutableListOf<String>()
+                    val forecastIconArray = mutableListOf<String>()
+                    val forecastAfterIconArray = mutableListOf<String>()
+                    val forecastAfterAfterIconArray = mutableListOf<String>()
                     val l1 = cD.substringBefore(" ")
-                    val currentDay = l1.substringAfterLast("-").toInt()
                     val lat1 = data.substringAfter("=")
                     val lat = lat1.substringBefore("&")
                     val lon = data.substringAfterLast("=")
+                    val currentDate = cD.substringBefore(" ")
                     val weatherData = weatherApi.getForecastAsync(API_KEY, lat, lon).await()
+
+                    val dayFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    val mainDate = LocalDate.parse(currentDate, dayFormat)
+                    val afterMainDate = mainDate.plusDays(1)
+                    val afterAfterMainDate = mainDate.plusDays(2)
+                    val afterAfterAfterMainDate = mainDate.plusDays(3)
+
+                    Log.d("foreInfo", "$mainDate $afterMainDate $afterAfterMainDate $afterAfterAfterMainDate")
+
                     for (i in 0 until weatherData.list.size) {
                         val x1 = weatherData.list[i].dtTxt.substringBefore(" ")
-                        val x2 = x1.substringAfterLast("-").toInt()
 
-                        if (x2 == (currentDay + 1)) {
+                        if (x1 == afterMainDate.toString()) {
                             forecastTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
+                            forecastIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
                         }
-                        if (x2 == (currentDay + 2)){
+                        if (x1 == afterAfterMainDate.toString()){
                             forecastAfterTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastAfterTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastAfterTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
+                            forecastAfterIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
                         }
-                        if (x2 == (currentDay + 3)){
+                        if (x1 == afterAfterAfterMainDate.toString()){
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
+                            forecastAfterAfterIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
                         }
                     }
 
-                    val monday = "понедельник"
-                    val tuesday = "вторник"
-                    val wednesday = "среда"
-                    val thursday = "четверг"
-                    val friday = "пятница"
-                    val saturday = "суббота"
-                    val sunday = "воскресенье"
 
                     val tomorrowTemp = forecastTomorrowArray[16]
                     val tomorrowDesc = forecastTomorrowArray[17]
@@ -94,9 +100,14 @@ class WeatherRepository(
                     val tomorrowAfterDesc = forecastAfterTomorrowArray[17]
                     val tomorrowAfterAfterTemp = forecastAfterAfterTomorrowArray[16]
                     val tomorrowAfterAfterDesc = forecastAfterAfterTomorrowArray[17]
-                    /*Log.d("foreInfo", "${forecastTomorrowArray.toList()}")
-                    Log.d("foreInfo", "${forecastAfterTomorrowArray.toList()}")
-                    Log.d("foreInfo", "${forecastAfterAfterTomorrowArray.toList()}")*/
+
+                    Log.d("foreInfo", "${forecastIconArray[0]} $forecastTomorrowArray")
+                    Log.d("foreInfo", "${forecastAfterIconArray[0]} $forecastAfterTomorrowArray")
+                    Log.d("foreInfo", "${forecastAfterAfterIconArray[0]} $forecastAfterAfterTomorrowArray")
+
+                    FInfo.tomorrowIcon = forecastIconArray[0]
+                    FInfo.tomorrowAfterIcon = forecastAfterIconArray[0]
+                    FInfo.tomorrowAfterAfterIcon = forecastAfterAfterIconArray[0]
 
                     FInfo.dTempTomorrow = tomorrowTemp
                     FInfo.dDescriptionTomorrow = tomorrowDesc

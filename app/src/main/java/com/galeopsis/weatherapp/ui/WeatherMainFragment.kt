@@ -195,7 +195,7 @@ class WeatherMainFragment (): Fragment() {
         activity?.let { it1 -> dismissKeyboard(it1) }
         context?.let { isOnline(it) }
         if (context?.let { isOnline(it) } == true) {
-            Log.d("foreInfo", "отправлен http запрос $inputData $method")
+//            Log.d("foreInfo", "отправлен http запрос $inputData $method")
             mainViewModel.fetchData(inputData, method)
             initData()
         }
@@ -303,10 +303,28 @@ class WeatherMainFragment (): Fragment() {
                         val iconToTrim = (weatherData.weather.toString()).substringAfter("icon=")
                         val iconData = iconToTrim.substringBefore(')')
                         val iconUrl = "https://openweathermap.org/img/w/$iconData.png"
+                        val iconUrl1 = "https://openweathermap.org/img/w/${FInfo.tomorrowIcon}.png"
+                        val iconUrl2 = "https://openweathermap.org/img/w/${FInfo.tomorrowAfterIcon}.png"
+                        val iconUrl3 = "https://openweathermap.org/img/w/${FInfo.tomorrowAfterAfterIcon}.png"
+
+
 
                         Glide.with(this@WeatherMainFragment)
                             .load(iconUrl)
                             .into(icon)
+
+                        Glide.with(this@WeatherMainFragment)
+                            .load(iconUrl1)
+                            .into(icon1)
+
+                        Glide.with(this@WeatherMainFragment)
+                            .load(iconUrl2)
+                            .into(icon2)
+
+                        Glide.with(this@WeatherMainFragment)
+                            .load(iconUrl3)
+                            .into(icon3)
+
                     }
 
                 }

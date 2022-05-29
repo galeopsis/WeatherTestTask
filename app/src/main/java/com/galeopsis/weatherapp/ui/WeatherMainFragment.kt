@@ -155,30 +155,8 @@ class WeatherMainFragment (): Fragment() {
                 .setEndIconOnClickListener {
                     searchByName("name")
                 }
-
-            /*switchCompat.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    inputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-                    inputLayout
-                        .setEndIconOnClickListener {
-                            searchByZip("zip")
-                        }
-                } else {
-                    inputEditText.inputType = InputType.TYPE_CLASS_TEXT
-                    inputLayout
-                        .setEndIconOnClickListener {
-                            searchByName("name")
-                        }
-                }
-            }*/
         }
     }
-
-    /*private fun WeatherMainFragmentBinding.searchByZip(method: String) {
-        val inputText = deleteSpace()
-        val inputData = "$inputText,ru"
-        validate(inputData, method)
-    }*/
 
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
@@ -195,7 +173,7 @@ class WeatherMainFragment (): Fragment() {
         activity?.let { it1 -> dismissKeyboard(it1) }
         context?.let { isOnline(it) }
         if (context?.let { isOnline(it) } == true) {
-//            Log.d("foreInfo", "отправлен http запрос $inputData $method")
+            Log.d("foreInfo", "отправлен http запрос $inputData $method")
             mainViewModel.fetchData(inputData, method)
             initData()
         }
@@ -277,7 +255,6 @@ class WeatherMainFragment (): Fragment() {
                         if (weatherData.name == "Бадалык") cityName.text =
                             "Красноярск" else cityName.text = weatherData.name
                         cityName.visibility = View.VISIBLE
-//                        temperature.text = ((weatherData.main?.temp?.toInt()).toString() + " °С")
                         temperature.text = ("+$temp°С")
                         temperature.visibility = View.VISIBLE
                         wind.text = (rWind + " м/с")

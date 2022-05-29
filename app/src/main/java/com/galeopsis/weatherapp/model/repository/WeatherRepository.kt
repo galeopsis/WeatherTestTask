@@ -25,11 +25,6 @@ class WeatherRepository(
     suspend fun refresh(data: String, method: String) {
         withContext(Dispatchers.IO) {
             when (method) {
-               /* "zip" -> {
-                    val weatherData = weatherApi.getWeatherByZipCodeAsync(API_KEY, data).await()
-                    weatherDao.deleteAllData()
-                    weatherDao.add(weatherData)
-                }*/
                 "name" -> {
                     val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()
                     weatherDao.deleteAllData()
@@ -49,13 +44,15 @@ class WeatherRepository(
                 "forecast" -> {
                     val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
                     val cD = sdf.format(Date())
+
                     val forecastTomorrowArray = mutableListOf<String>()
                     val forecastAfterTomorrowArray = mutableListOf<String>()
                     val forecastAfterAfterTomorrowArray = mutableListOf<String>()
-                    val forecastIconArray = mutableListOf<String>()
-                    val forecastAfterIconArray = mutableListOf<String>()
-                    val forecastAfterAfterIconArray = mutableListOf<String>()
-                    val l1 = cD.substringBefore(" ")
+
+                    val iconForecastArray = mutableListOf<String>()
+                    val iconAfterForecastArray = mutableListOf<String>()
+                    val iconAfterAfterForecastArray = mutableListOf<String>()
+
                     val lat1 = data.substringAfter("=")
                     val lat = lat1.substringBefore("&")
                     val lon = data.substringAfterLast("=")
@@ -77,21 +74,45 @@ class WeatherRepository(
                             forecastTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
-                            forecastIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
+                            iconForecastArray.add(weatherData.list[i].dtTxt)
+                            iconForecastArray.add(weatherData.list[i].weather[0].toString())
                         }
                         if (x1 == afterAfterMainDate.toString()){
                             forecastAfterTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastAfterTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastAfterTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
-                            forecastAfterIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
+                            iconAfterForecastArray.add(weatherData.list[i].dtTxt)
+                            iconAfterForecastArray.add(weatherData.list[i].weather[0].toString())
                         }
                         if (x1 == afterAfterAfterMainDate.toString()){
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].dtTxt)
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].main.temp?.toInt().toString())
                             forecastAfterAfterTomorrowArray.add(weatherData.list[i].weather[0]?.description.toString())
-                            forecastAfterAfterIconArray.add(weatherData.list[i].weather[0]?.icon.toString())
+                            iconAfterAfterForecastArray.add(weatherData.list[i].dtTxt)
+                            iconAfterAfterForecastArray.add(weatherData.list[i].weather[0].toString())
                         }
                     }
+
+                    Log.d("foreInfo", "${iconForecastArray}")
+                    Log.d("foreInfo", "${iconAfterForecastArray}")
+                    Log.d("foreInfo", "${iconAfterAfterForecastArray}")
+
+                    Log.d("foreInfo", "${iconForecastArray[10]} ${iconForecastArray[11]}")
+                    Log.d("foreInfo", "${iconAfterForecastArray[10]} ${iconAfterForecastArray[11]}")
+                    Log.d("foreInfo", "${iconAfterAfterForecastArray[10]} ${iconAfterAfterForecastArray[11]}")
+
+                    val i1= iconForecastArray[11].substringAfter("icon=")
+                    val icon1 = i1.substringBefore(",")
+                    val i2= iconAfterForecastArray[11].substringAfter("icon=")
+                    val icon2 = i2.substringBefore(",")
+                    val i3= iconAfterAfterForecastArray[11].substringAfter("icon=")
+                    val icon3 = i3.substringBefore(",")
+
+                    FInfo.tomorrowIcon = icon1
+                    FInfo.tomorrowAfterIcon = icon2
+                    FInfo.tomorrowAfterAfterIcon = icon3
+
+
 
 
                     val tomorrowTemp = forecastTomorrowArray[16]
@@ -101,13 +122,11 @@ class WeatherRepository(
                     val tomorrowAfterAfterTemp = forecastAfterAfterTomorrowArray[16]
                     val tomorrowAfterAfterDesc = forecastAfterAfterTomorrowArray[17]
 
-                    Log.d("foreInfo", "${forecastIconArray[0]} $forecastTomorrowArray")
-                    Log.d("foreInfo", "${forecastAfterIconArray[0]} $forecastAfterTomorrowArray")
-                    Log.d("foreInfo", "${forecastAfterAfterIconArray[0]} $forecastAfterAfterTomorrowArray")
-
-                    FInfo.tomorrowIcon = forecastIconArray[0]
-                    FInfo.tomorrowAfterIcon = forecastAfterIconArray[0]
-                    FInfo.tomorrowAfterAfterIcon = forecastAfterAfterIconArray[0]
+                   /* Log.d("foreInfo", "${weatherData.list[0].weather.toList()}")
+                    Log.d("foreInfo", "temp now = ${weatherData.list[0].main.temp?.toInt().toString()}")
+                    Log.d("foreInfo", "$forecastTomorrowArray")
+                    Log.d("foreInfo", "$forecastAfterTomorrowArray")
+                    Log.d("foreInfo", "$forecastAfterAfterTomorrowArray")*/
 
                     FInfo.dTempTomorrow = tomorrowTemp
                     FInfo.dDescriptionTomorrow = tomorrowDesc
@@ -137,9 +156,9 @@ class WeatherRepository(
                     FInfo.tomorrowAfterDate = "${translateDayOfWeek(tomorrowAfterDayOfWeek)}, $formattedDateAfterTomorrow"
                     FInfo.tomorrowAfterAfterDate = "${translateDayOfWeek(tomorrowAfterAfterDayOfWeek)}, $formattedDateAfterAfterTomorrow"
 
-                    Log.d("foreInfo", "${FInfo.tomorrowDate} ${FInfo.dTempTomorrow}, ${FInfo.dDescriptionTomorrow}")
-                    Log.d("foreInfo", "${FInfo.tomorrowAfterDate} ${FInfo.dTempAfterTomorrow}, ${FInfo.dDescriptionAfterTomorrow}")
-                    Log.d("foreInfo", "${FInfo.tomorrowAfterAfterDate} ${FInfo.dTempAfterAfterTomorrow}, ${FInfo.dDescriptionAfterAfterTomorrow}")
+                   /* Log.d("foreInfo", "${FInfo.tomorrowDate} ${FInfo.dTempTomorrow}, ${FInfo.dDescriptionTomorrow} ${FInfo.tomorrowIcon} ")
+                    Log.d("foreInfo", "${FInfo.tomorrowAfterDate} ${FInfo.dTempAfterTomorrow}, ${FInfo.dDescriptionAfterTomorrow} ${FInfo.tomorrowAfterIcon} ")
+                    Log.d("foreInfo", "${FInfo.tomorrowAfterAfterDate} ${FInfo.dTempAfterAfterTomorrow}, ${FInfo.dDescriptionAfterAfterTomorrow} ${FInfo.tomorrowAfterAfterIcon} ")*/
 
                 }
                 else -> {}

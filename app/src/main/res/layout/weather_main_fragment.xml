@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_weather_new">
+    android:background="@drawable/background_weather_newest">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
@@ -46,7 +46,7 @@
             android:id="@+id/cityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="20sp"
             android:gravity="start"
             android:shadowColor="@color/black"
             android:shadowDx="2"
@@ -80,7 +80,7 @@
             android:id="@+id/currentCondition"
             android:layout_width="116dp"
             android:layout_height="66dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:shadowColor="@color/black"
             android:shadowDx="1"
@@ -98,7 +98,7 @@
             android:id="@+id/tomorrowDate"
             android:layout_width="190dp"
             android:layout_height="22dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="15dp"
             android:gravity="center|top"
             android:text="26.05"
             android:textColor="#81C784"
@@ -108,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.904"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/temperature" />
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
         <TextView
             android:id="@+id/tomorrow"
@@ -231,7 +231,7 @@
             android:id="@+id/windSpeed"
             android:layout_width="120dp"
             android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:text="@string/wind_speed"
             android:textColor="#81C784"
             android:textStyle="bold"
@@ -334,7 +334,7 @@
             android:id="@+id/versionNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="150dp"
             android:gravity="end"
             android:text="Версия: 1.1.0.2.74"
             android:textColor="#7DAADD"

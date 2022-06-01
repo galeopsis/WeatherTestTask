@@ -356,7 +356,7 @@
             android:id="@+id/versionNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="20dp"
             android:background="#40000000"
             android:gravity="end"
             android:text="Версия: 1.1.0.2.74"
@@ -366,7 +366,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sunsetVal" />
+            app:layout_constraintTop_toBottomOf="@+id/backForecast" />
 
         <FrameLayout
             android:id="@+id/loadingLayout"

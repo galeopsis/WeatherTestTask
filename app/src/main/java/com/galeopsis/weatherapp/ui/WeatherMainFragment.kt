@@ -263,6 +263,10 @@ class WeatherMainFragment (): Fragment() {
                         humidityVal.text = (rHumidity + " %")
                         humidity.visibility = View.VISIBLE
                         humidityVal.visibility = View.VISIBLE
+                        backForecast.visibility = View.VISIBLE
+                        versionNumber.visibility = View.VISIBLE
+                        gps.visibility = View.VISIBLE
+                        inputLayout.visibility = View.VISIBLE
                         sunriseVal.text = weatherData.timezone?.let { it1 ->
                             weatherData.sys?.sunrise?.unixTimestampToTimeString(
                                 it1

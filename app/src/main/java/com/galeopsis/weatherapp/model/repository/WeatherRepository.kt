@@ -168,13 +168,13 @@ class WeatherRepository(
 
     private fun translateDayOfWeek(date: String): String {
         var newDate = date
-       if (date == "MONDAY") newDate = "понедельник"
-       if (date == "TUESDAY") newDate = "вторник"
-       if (date == "WEDNESDAY") newDate = "среда"
-       if (date == "THURSDAY") newDate = "четверг"
-       if (date == "FRIDAY") newDate = "пятница"
-       if (date == "SATURDAY") newDate = "суббота"
-       if (date == "SUNDAY") newDate = "воскресенье"
+       if (date == "MONDAY") newDate = "в понедельник"
+       if (date == "TUESDAY") newDate = "во вторник"
+       if (date == "WEDNESDAY") newDate = "в среду"
+       if (date == "THURSDAY") newDate = "в четверг"
+       if (date == "FRIDAY") newDate = "в пятницу"
+       if (date == "SATURDAY") newDate = "в субботу"
+       if (date == "SUNDAY") newDate = "в воскресенье"
         return newDate
     }
 }

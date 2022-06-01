@@ -230,7 +230,7 @@ class WeatherMainFragment (): Fragment() {
                         val val2 = "$dTempAfterTomorrow°С\n$dDescriptionAfterTomorrow"
                         val val3 = "$dTempAfterAfterTomorrow°С\n$dDescriptionAfterAfterTomorrow"
 
-                        tomorrowDate.text = FInfo.tomorrowDate
+                        tomorrowDate.text = "завтра"
                         tomorrow.text = val1
 
                         tomorrowAfterDate.text = FInfo.tomorrowAfterDate

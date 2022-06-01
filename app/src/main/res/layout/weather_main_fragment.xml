@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_weather_newest">
+    android:background="@drawable/background_weather_new">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardViewContainer"
@@ -20,13 +20,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="60dp"
-            android:hint="@string/search_by"
             android:textColorHint="#3F89E0"
-            app:boxBackgroundColor="#64B5F6"
+            app:boxBackgroundColor="#40000000"
             app:boxStrokeColor="#0FECD7"
             app:counterEnabled="false"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
+            app:endIconTint="@color/white"
             app:endIconDrawable="@drawable/ic_baseline_search_24"
             app:endIconMode="custom"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,138 +94,158 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/icon" />
 
-        <TextView
-            android:id="@+id/tomorrowDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center|top"
-            android:text="26.05"
-            android:textColor="#81C784"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@drawable/corner_back"
+            android:id="@+id/backForecast"
+            android:layout_width="216dp"
+            android:layout_height="335dp"
+            app:layout_constraintBottom_toTopOf="@+id/versionNumber"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintHorizontal_bias="0.875"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature" />
+            app:layout_constraintTop_toBottomOf="@id/temperature"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/tomorrow"
-            android:layout_width="162dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="+19°С\nпеременная облачность"
-            android:textColor="#7DAADD"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.915"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowDate" />
+            <TextView
+                android:id="@+id/tomorrowDate"
+                android:layout_width="190dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="26.05"
+                android:textColor="#81C784"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.904"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/backForecast" />
 
-        <ImageView
-            android:id="@+id/icon1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/tomorrow"
-            app:layout_constraintEnd_toEndOf="@+id/tomorrow"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tomorrow"
-            app:layout_constraintTop_toTopOf="@+id/tomorrow"
-            app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/tomorrow"
+                android:layout_width="162dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="+19°С\nпеременная облачность"
+                android:textColor="#7DAADD"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.915"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tomorrowDate" />
 
-        <ImageView
-            android:id="@+id/icon2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/tomorrowAfter"
-            app:layout_constraintEnd_toEndOf="@+id/tomorrowAfter"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tomorrowAfter"
-            app:layout_constraintTop_toTopOf="@+id/tomorrowAfter"
-            app:layout_constraintVertical_bias="0.0" />
+            <ImageView
+                android:id="@+id/icon1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="@+id/tomorrow"
+                app:layout_constraintEnd_toEndOf="@+id/tomorrow"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tomorrow"
+                app:layout_constraintTop_toTopOf="@+id/tomorrow"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/icon3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/tomorrowAfterAfter"
-            app:layout_constraintEnd_toEndOf="@+id/tomorrowAfterAfter"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tomorrowAfterAfter"
-            app:layout_constraintTop_toTopOf="@+id/tomorrowAfterAfter"
-            app:layout_constraintVertical_bias="0.0" />
+            <ImageView
+                android:id="@+id/icon2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="@+id/tomorrowAfter"
+                app:layout_constraintEnd_toEndOf="@+id/tomorrowAfter"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tomorrowAfter"
+                app:layout_constraintTop_toTopOf="@+id/tomorrowAfter"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/tomorrowAfterDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="27.05"
-            android:textColor="#81C784"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrow" />
+            <ImageView
+                android:id="@+id/icon3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="@+id/tomorrowAfterAfter"
+                app:layout_constraintEnd_toEndOf="@+id/tomorrowAfterAfter"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tomorrowAfterAfter"
+                app:layout_constraintTop_toTopOf="@+id/tomorrowAfterAfter"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/tomorrowAfter"
-            android:layout_width="162dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="+19°С\nпеременная облачность"
-            android:textColor="#7DAADD"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterDate" />
+            <TextView
+                android:id="@+id/tomorrowAfterDate"
+                android:layout_width="190dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="27.05"
+                android:textColor="#81C784"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.914"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tomorrow" />
 
-        <TextView
-            android:id="@+id/tomorrowAfterAfterDate"
-            android:layout_width="190dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="28.05"
-            android:textColor="#81C784"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowAfter" />
+            <TextView
+                android:id="@+id/tomorrowAfter"
+                android:layout_width="162dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="+19°С\nпеременная облачность"
+                android:textColor="#7DAADD"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.914"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterDate" />
 
-        <TextView
-            android:id="@+id/tomorrowAfterAfter"
-            android:layout_width="162dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center|top"
-            android:text="+19°С\nпеременная облачность"
-            android:textColor="#7DAADD"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.914"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterAfterDate" />
+            <TextView
+                android:id="@+id/tomorrowAfterAfterDate"
+                android:layout_width="190dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="28.05"
+                android:textColor="#81C784"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.914"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tomorrowAfter" />
 
+            <TextView
+                android:id="@+id/tomorrowAfterAfter"
+                android:layout_width="162dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center|top"
+                android:text="+19°С\nпеременная облачность"
+                android:textColor="#7DAADD"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.914"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterAfterDate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/windSpeed"
@@ -332,17 +352,19 @@
 
         <TextView
             android:id="@+id/versionNumber"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="180dp"
+            android:background="#40000000"
             android:gravity="end"
             android:text="Версия: 1.1.0.2.74"
             android:textColor="#7DAADD"
             android:textSize="10sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tomorrowAfterAfter"
-            tools:layout_editor_absoluteX="16dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sunsetVal" />
 
         <FrameLayout
             android:id="@+id/loadingLayout"

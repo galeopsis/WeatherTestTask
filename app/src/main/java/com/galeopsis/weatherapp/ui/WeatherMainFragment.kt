@@ -210,6 +210,7 @@ class WeatherMainFragment (): Fragment() {
             mainViewModel.data.observe(viewLifecycleOwner) {
                 it?.forEach { weatherData ->
                     with(binding) {
+                        loadingLayout.visibility = View.VISIBLE
                         Log.d("foretest", FInfo.dTempTomorrow!!)
                         val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
@@ -307,6 +308,8 @@ class WeatherMainFragment (): Fragment() {
                         Glide.with(this@WeatherMainFragment)
                             .load(iconUrl3)
                             .into(icon3)
+
+                        loadingLayout.visibility = View.GONE
 
                     }
 

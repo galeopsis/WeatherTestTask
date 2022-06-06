@@ -60,6 +60,7 @@ class WeatherMainFragment (): Fragment() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        binding.loadingLayout.visibility = View.VISIBLE
         fetchData()
         initListeners()
 
@@ -199,7 +200,7 @@ class WeatherMainFragment (): Fragment() {
                     binding.loadingLayout.visibility = View.VISIBLE
                 LoadingState.Status.SUCCESS -> {
                     binding.inputEditText.text = null
-                    binding.loadingLayout.visibility = View.GONE
+//                    binding.loadingLayout.visibility = View.GONE
                 }
             }
         }

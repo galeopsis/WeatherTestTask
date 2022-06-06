@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -31,6 +32,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class WeatherMainFragment (): Fragment() {
 
     companion object {
@@ -41,6 +43,7 @@ class WeatherMainFragment (): Fragment() {
     private var _binding: WeatherMainFragmentBinding? = null
     private val binding get() = _binding!!
     lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val buttonClick = AlphaAnimation(1f, 0.8f)
     private var latitude = ""
     private var longtitude = ""
 
@@ -149,6 +152,7 @@ class WeatherMainFragment (): Fragment() {
     private fun initListeners() {
         with(binding) {
             gps.setOnClickListener {
+                onClick(gps)
                 getLastLocation()
             }
             inputLayout
@@ -201,6 +205,10 @@ class WeatherMainFragment (): Fragment() {
                 }
             }
         }
+    }
+
+    fun onClick(v: View) {
+        v.startAnimation(buttonClick)
     }
 
     private fun fetchData() {

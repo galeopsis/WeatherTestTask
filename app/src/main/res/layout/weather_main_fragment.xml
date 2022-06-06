@@ -395,7 +395,6 @@
             android:layout_height="30dp"
             android:contentDescription="@string/todo"
             android:visibility="invisible"
-            android:background="@drawable/button"
             android:src="@drawable/ic_location_icon"
             app:layout_constraintBottom_toTopOf="@+id/cityName"
             app:layout_constraintEnd_toEndOf="parent"

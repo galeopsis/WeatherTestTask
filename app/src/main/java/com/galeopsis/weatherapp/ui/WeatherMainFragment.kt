@@ -43,7 +43,6 @@ class WeatherMainFragment (): Fragment() {
     private var _binding: WeatherMainFragmentBinding? = null
     private val binding get() = _binding!!
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-    private val buttonClick = AlphaAnimation(1f, 0.8f)
     private var latitude = ""
     private var longtitude = ""
 
@@ -152,7 +151,6 @@ class WeatherMainFragment (): Fragment() {
     private fun initListeners() {
         with(binding) {
             gps.setOnClickListener {
-                onClick(gps)
                 getLastLocation()
             }
             inputLayout
@@ -205,10 +203,6 @@ class WeatherMainFragment (): Fragment() {
                 }
             }
         }
-    }
-
-    fun onClick(v: View) {
-        v.startAnimation(buttonClick)
     }
 
     private fun fetchData() {

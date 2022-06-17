@@ -7,6 +7,7 @@ import com.galeopsis.weatherapp.BuildConfig.API_KEY
 import com.galeopsis.weatherapp.model.FInfo
 import com.galeopsis.weatherapp.model.api.WeatherApi
 import com.galeopsis.weatherapp.model.dao.WeatherDao
+import com.galeopsis.weatherapp.utils.unixTimestampToTimeString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -59,13 +60,16 @@ class WeatherRepository(
                     val currentDate = cD.substringBefore(" ")
                     val weatherData = weatherApi.getForecastAsync(API_KEY, lat, lon).await()
 
+                    val timezone = weatherData.city?.timezone
+                    val xxx = timezone?.let { weatherData.list[0].dt.unixTimestampToTimeString(it) }
+
                     val dayFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     val mainDate = LocalDate.parse(currentDate, dayFormat)
                     val afterMainDate = mainDate.plusDays(1)
                     val afterAfterMainDate = mainDate.plusDays(2)
                     val afterAfterAfterMainDate = mainDate.plusDays(3)
 
-                    Log.d("foreInfo", "$mainDate $afterMainDate $afterAfterMainDate $afterAfterAfterMainDate")
+                    Log.d("foreInfo", "$mainDate $afterMainDate $afterAfterMainDate $afterAfterAfterMainDate ttt $xxx")
 
                     for (i in 0 until weatherData.list.size) {
                         val x1 = weatherData.list[i].dtTxt.substringBefore(" ")
@@ -93,19 +97,50 @@ class WeatherRepository(
                         }
                     }
 
-                    Log.d("foreInfo", "${iconForecastArray}")
-                    Log.d("foreInfo", "${iconAfterForecastArray}")
-                    Log.d("foreInfo", "${iconAfterAfterForecastArray}")
+                    val fMax1 = maxOf(
+                        forecastTomorrowArray[1].toInt(),
+                        forecastTomorrowArray[4].toInt(),
+                        forecastTomorrowArray[7].toInt(),
+                        forecastTomorrowArray[10].toInt(),
+                        forecastTomorrowArray[13].toInt(),
+                        forecastTomorrowArray[16].toInt(),
+                        forecastTomorrowArray[19].toInt(),
+                        forecastTomorrowArray[22].toInt()
+                    )
+                    val fMax2 = maxOf(
+                        forecastAfterTomorrowArray[1].toInt(),
+                        forecastAfterTomorrowArray[4].toInt(),
+                        forecastAfterTomorrowArray[7].toInt(),
+                        forecastAfterTomorrowArray[10].toInt(),
+                        forecastAfterTomorrowArray[13].toInt(),
+                        forecastAfterTomorrowArray[16].toInt(),
+                        forecastAfterTomorrowArray[19].toInt(),
+                        forecastAfterTomorrowArray[22].toInt()
+                    )
+                    val fMax3 = maxOf(
+                        forecastAfterAfterTomorrowArray[1].toInt(),
+                        forecastAfterAfterTomorrowArray[4].toInt(),
+                        forecastAfterAfterTomorrowArray[7].toInt(),
+                        forecastAfterAfterTomorrowArray[10].toInt(),
+                        forecastAfterAfterTomorrowArray[13].toInt(),
+                        forecastAfterAfterTomorrowArray[16].toInt(),
+                        forecastAfterAfterTomorrowArray[19].toInt(),
+                        forecastAfterAfterTomorrowArray[22].toInt()
+                    )
 
-                    Log.d("foreInfo", "${iconForecastArray[10]} ${iconForecastArray[11]}")
-                    Log.d("foreInfo", "${iconAfterForecastArray[10]} ${iconAfterForecastArray[11]}")
-                    Log.d("foreInfo", "${iconAfterAfterForecastArray[10]} ${iconAfterAfterForecastArray[11]}")
+                    Log.d("foreInfo", "${forecastTomorrowArray.toList()}")
+                    Log.d("foreInfo", "${forecastAfterTomorrowArray.toList()}")
+                    Log.d("foreInfo", "${forecastAfterAfterTomorrowArray.toList()}")
 
-                    val i1= iconForecastArray[11].substringAfter("icon=")
+                    Log.d("foreInfo", "${iconForecastArray[6]} ${iconForecastArray[7]}")
+                    Log.d("foreInfo", "${iconAfterForecastArray[6]} ${iconAfterForecastArray[7]}")
+                    Log.d("foreInfo", "${iconAfterAfterForecastArray[6]} ${iconAfterAfterForecastArray[7]}")
+
+                    val i1= iconForecastArray[7].substringAfter("icon=")
                     val icon1 = i1.substringBefore(",")
-                    val i2= iconAfterForecastArray[11].substringAfter("icon=")
+                    val i2= iconAfterForecastArray[7].substringAfter("icon=")
                     val icon2 = i2.substringBefore(",")
-                    val i3= iconAfterAfterForecastArray[11].substringAfter("icon=")
+                    val i3= iconAfterAfterForecastArray[7].substringAfter("icon=")
                     val icon3 = i3.substringBefore(",")
 
                     FInfo.tomorrowIcon = icon1
@@ -113,14 +148,21 @@ class WeatherRepository(
                     FInfo.tomorrowAfterAfterIcon = icon3
 
 
+                    val tomorrowTemp = fMax1.toString()
+                    val tomorrowDesc = forecastTomorrowArray[11]
+                    val tomorrowAfterTemp = fMax2.toString()
+                    val tomorrowAfterDesc = forecastAfterTomorrowArray[11]
+                    val tomorrowAfterAfterTemp = fMax3.toString()
+                    val tomorrowAfterAfterDesc = forecastAfterAfterTomorrowArray[11]
 
 
-                    val tomorrowTemp = forecastTomorrowArray[16]
-                    val tomorrowDesc = forecastTomorrowArray[17]
-                    val tomorrowAfterTemp = forecastAfterTomorrowArray[16]
-                    val tomorrowAfterDesc = forecastAfterTomorrowArray[17]
-                    val tomorrowAfterAfterTemp = forecastAfterAfterTomorrowArray[16]
-                    val tomorrowAfterAfterDesc = forecastAfterAfterTomorrowArray[17]
+
+                    /*val tomorrowTemp = forecastTomorrowArray[10]
+                    val tomorrowDesc = forecastTomorrowArray[11]
+                    val tomorrowAfterTemp = forecastAfterTomorrowArray[10]
+                    val tomorrowAfterDesc = forecastAfterTomorrowArray[11]
+                    val tomorrowAfterAfterTemp = forecastAfterAfterTomorrowArray[10]
+                    val tomorrowAfterAfterDesc = forecastAfterAfterTomorrowArray[11]*/
 
                    /* Log.d("foreInfo", "${weatherData.list[0].weather.toList()}")
                     Log.d("foreInfo", "temp now = ${weatherData.list[0].main.temp?.toInt().toString()}")
@@ -137,9 +179,9 @@ class WeatherRepository(
                     FInfo.mainTemp = weatherData.list[0].main.temp?.toInt().toString()
                     FInfo.humidity = weatherData.list[0].main.humidity.toString()
                     FInfo.wind = weatherData.list[0].wind.speed.toInt().toString()
-                    val dTomorrow = forecastTomorrowArray[15].substringBefore(" ")
-                    val dAfterTomorrow = forecastAfterTomorrowArray[15].substringBefore(" ")
-                    val dAfterAfterTomorrow = forecastAfterAfterTomorrowArray[15].substringBefore(" ")
+                    val dTomorrow = forecastTomorrowArray[9].substringBefore(" ")
+                    val dAfterTomorrow = forecastAfterTomorrowArray[9].substringBefore(" ")
+                    val dAfterAfterTomorrow = forecastAfterAfterTomorrowArray[9].substringBefore(" ")
 
                     val dateTomorrow = LocalDate.parse(dTomorrow)
                     val dateAfterTomorrow = LocalDate.parse(dAfterTomorrow)

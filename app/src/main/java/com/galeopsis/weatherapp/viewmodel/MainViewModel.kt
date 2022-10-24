@@ -1,6 +1,8 @@
 package com.galeopsis.weatherapp.viewmodel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +21,7 @@ class MainViewModel(
 
     val data = weatherRepository.data
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun fetchData(inputData: String, method: String) {
         viewModelScope.launch {
             try {

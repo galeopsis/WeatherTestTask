@@ -11,6 +11,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -20,6 +21,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -55,6 +57,7 @@ class WeatherMainFragment (): Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,6 +81,7 @@ class WeatherMainFragment (): Fragment() {
         return version
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
 
@@ -118,6 +122,7 @@ class WeatherMainFragment (): Fragment() {
         return false
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -149,6 +154,7 @@ class WeatherMainFragment (): Fragment() {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initListeners() {
         with(binding) {
             gps.setOnClickListener {
@@ -161,6 +167,7 @@ class WeatherMainFragment (): Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
         val inputText = deleteSpace()
         if (inputText.isNotEmpty()) validate(inputText, method) else return
@@ -172,6 +179,7 @@ class WeatherMainFragment (): Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun validate(inputData: String, method: String) {
         activity?.let { it1 -> dismissKeyboard(it1) }
         context?.let { isOnline(it) }
@@ -206,6 +214,7 @@ class WeatherMainFragment (): Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun fetchData() {
         try {
             mainViewModel.data.observe(viewLifecycleOwner) {
@@ -258,7 +267,7 @@ class WeatherMainFragment (): Fragment() {
                         if (weatherData.name == "Бадалык") cityName.text =
                             "Красноярск" else cityName.text = weatherData.name
                         cityName.visibility = View.VISIBLE
-                        temperature.text = ("+$temp°С")
+                        temperature.text = ("$temp°С")
                         temperature.visibility = View.VISIBLE
                         wind.text = (rWind + " м/с")
                         windSpeed.visibility = View.VISIBLE

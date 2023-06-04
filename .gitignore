@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/app/release/output-metadata.json
-/app/debug/output-metadata.json
+/app/release/*.json
+/app/debug/*.json

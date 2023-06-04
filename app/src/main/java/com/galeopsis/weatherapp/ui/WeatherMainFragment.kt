@@ -340,6 +340,7 @@ class WeatherMainFragment (): Fragment() {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_CELLULAR")
                     return true
                 }
+
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_WIFI")
                     return true

@@ -45,7 +45,7 @@ android {
                 variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if ((variant.buildType.name == 'release') && outputFile != null && outputFile.name.endsWith('.apk')) {
-                        outputFileName = "${variant.flavorName}_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_release.apk"
+                        outputFileName = "${variant.flavorName}weather_${getDate()}_${versionNameSuffix}_release.apk"
                     }
                 }
             }
@@ -56,7 +56,7 @@ android {
                 variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if ((variant.buildType.name == 'debug') && outputFile != null && outputFile.name.endsWith('.apk')) {
-                        outputFileName = "${variant.flavorName}_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_debug.apk"
+                        outputFileName = "${variant.flavorName}weather_${getDate()}_${versionNameSuffix}_debug.apk"
                     }
                 }
             }

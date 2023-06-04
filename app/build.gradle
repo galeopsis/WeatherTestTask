@@ -21,8 +21,8 @@ android {
         applicationId "com.galeopsis.weatherapp"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 45
-        versionName "1.2.0.$gitCommitCount"
+        versionCode gitCommitCount
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,14 +38,14 @@ android {
 
     buildTypes {
         release {
-            versionNameSuffix "${gitCommitCount}"
+            versionNameSuffix ".${gitCommitCount}"
             minifyEnabled false
 
             applicationVariants.all { variant ->
                 variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if ((variant.buildType.name == 'release') && outputFile != null && outputFile.name.endsWith('.apk')) {
-                        outputFileName = "${variant.flavorName}weather_${getDate()}_${versionNameSuffix}_release.apk"
+                        outputFileName = "${variant.flavorName}weather_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_release.apk"
                     }
                 }
             }
@@ -56,7 +56,7 @@ android {
                 variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if ((variant.buildType.name == 'debug') && outputFile != null && outputFile.name.endsWith('.apk')) {
-                        outputFileName = "${variant.flavorName}weather_${getDate()}_${versionNameSuffix}_debug.apk"
+                        outputFileName = "${variant.flavorName}weather_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_debug.apk"
                     }
                 }
             }

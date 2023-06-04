@@ -38,7 +38,7 @@ android {
 
     buildTypes {
         release {
-            versionNameSuffix ".${gitCommitCount}"
+            versionNameSuffix "${gitCommitCount}"
             minifyEnabled false
 
             applicationVariants.all { variant ->

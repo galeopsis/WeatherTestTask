@@ -33,16 +33,55 @@ android {
 
     buildTypes {
         release {
+            versionNameSuffix ".${gitCommitCount}"
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if ((variant.buildType.name == 'release') && outputFile != null && outputFile.name.endsWith('.apk')) {
+                        outputFileName = "${variant.flavorName}_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_release.apk"
+                    }
+                }
+            }
+        }
+        debug {
+            versionNameSuffix ".${gitCommitCount}"
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if ((variant.buildType.name == 'debug') && outputFile != null && outputFile.name.endsWith('.apk')) {
+                        outputFileName = "${variant.flavorName}_${getDate()}_${defaultConfig.versionName}${versionNameSuffix}_debug.apk"
+                    }
+                }
+            }
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    tasks.whenTaskAdded { task ->
+        if (task.name.startsWith("bundle")) {
+            def renameTaskName = "rename${task.name.capitalize()}Aab"
+            def flavor = task.name.substring("bundle".length()).uncapitalize()
+            def path = "${buildDir}/outputs/bundle/${flavor}/"
+            def isDebug = gradle.startParameter.taskRequests.any { !it.args.isEmpty() && it.args.first().contains("Debug") }
+            def flavorNameFile
+            if (!isDebug)
+                flavorNameFile = flavor.replace("Release", "_")
+            else
+                flavorNameFile = flavor.replace("Debug", "_")
+            def versionNameSuffix = ".${gitCommitCount}"
+            tasks.create(renameTaskName, Copy) {
+                from(path)
+                into(path)
+                destinationDir file("${buildDir}/outputs/bundle/${flavor}/")
+                rename { String fileName -> "${flavorNameFile}${getDate()}_${defaultConfig.versionName}${versionNameSuffix}.aab" }
+                doLast{
+                    def tree = fileTree(path)
+                    tree.include '**/app*.aab'
+                    tree.each { it.delete() }
+                }
+            }
+            task.finalizedBy(renameTaskName)
+        }
     }
     namespace 'com.galeopsis.weatherapp'
 }
@@ -100,4 +139,10 @@ dependencies {
 static getGitCommitCount() {
     def result = "git rev-list HEAD --count".execute().text
     return result.isInteger() ? result.toInteger() : 0
+}
+
+static getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
 }

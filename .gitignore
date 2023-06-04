@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/app/release/_2023-06-04_1.2.0.102.102_release.apk
+/app/release/
+/app/debug/

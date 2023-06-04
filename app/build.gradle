@@ -12,6 +12,11 @@ android {
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
     defaultConfig {
         applicationId "com.galeopsis.weatherapp"
         minSdkVersion 24

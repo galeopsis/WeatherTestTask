@@ -34,8 +34,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-//import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class WeatherMainFragment (): Fragment() {
 
@@ -62,13 +60,12 @@ class WeatherMainFragment (): Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestPermissions()
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         binding.loadingLayout.visibility = View.VISIBLE
-        Log.d("testWeatherApp", "fetchData()")
         fetchData()
+        getLastLocation()
         initListeners()
 
     }
@@ -88,7 +85,7 @@ class WeatherMainFragment (): Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
-        Log.d("testWeatherApp", "getLastLocation()")
+
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
@@ -98,8 +95,8 @@ class WeatherMainFragment (): Fragment() {
                         longtitude = location.longitude.toString()
                         validate("lat=$latitude&lon=$longtitude", "coordinates")
                     } else {
-                        latitude = "56.0097"
-                        longtitude = "92.7917"
+                        latitude = "56.0483"
+                        longtitude = "92.9171"
                         validate("lat=$latitude&lon=$longtitude", "coordinates")
                     }
                 }
@@ -113,15 +110,21 @@ class WeatherMainFragment (): Fragment() {
         }
     }
 
+
     private fun checkPermissions(): Boolean {
-        Log.d("testWeatherApp", "checkPermissions()")
-        return (ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED)
+        if (
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -159,8 +162,6 @@ class WeatherMainFragment (): Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initListeners() {
         with(binding) {
-            Log.d("testWeatherApp", "initListeners()")
-            getLastLocation()
             gps.setOnClickListener {
                 getLastLocation()
             }
@@ -173,7 +174,6 @@ class WeatherMainFragment (): Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun WeatherMainFragmentBinding.searchByName(method: String) {
-        Log.d("testWeatherApp", "searchByName ")
         val inputText = deleteSpace()
         if (inputText.isNotEmpty()) validate(inputText, method) else return
     }
@@ -186,11 +186,10 @@ class WeatherMainFragment (): Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validate(inputData: String, method: String) {
-        Log.d("testWeatherApp", "validate ")
         activity?.let { it1 -> dismissKeyboard(it1) }
         context?.let { isOnline(it) }
         if (context?.let { isOnline(it) } == true) {
-            Log.d("testWeatherApp", "validate отправлен http запрос $inputData $method")
+            Log.d("foreInfo", "отправлен http запрос $inputData $method")
             mainViewModel.fetchData(inputData, method)
             initData()
         }
@@ -206,37 +205,33 @@ class WeatherMainFragment (): Fragment() {
 
     private fun initData() {
         mainViewModel.loadingState.observe(viewLifecycleOwner) {
-            when (it) {
-                LoadingState.FAILED, is LoadingState.ERROR -> {
+            when (it.status) {
+                LoadingState.Status.FAILED -> {
                     binding.loadingLayout.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
                 }
-                LoadingState.LOADING -> {
+                LoadingState.Status.RUNNING ->
                     binding.loadingLayout.visibility = View.VISIBLE
-                }
-                LoadingState.SUCCESS -> {
-                    binding.loadingLayout.visibility = View.GONE
+                LoadingState.Status.SUCCESS -> {
                     binding.inputEditText.text = null
+//                    binding.loadingLayout.visibility = View.GONE
                 }
             }
         }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun fetchData() {
         try {
-            Log.w("testWeatherApp", "fetching data...")
-            mainViewModel.data.observe(viewLifecycleOwner) { weatherDataList ->
-                weatherDataList?.forEach { weatherData ->
+            mainViewModel.data.observe(viewLifecycleOwner) {
+                it?.forEach { weatherData ->
                     with(binding) {
-                        Log.d("testWeatherApp", FInfo.dTempTomorrow!!)
+                        Log.d("foretest", FInfo.dTempTomorrow!!)
                         val textToTrim = (weatherData.weather.toString()).substringAfter("description=")
                         val description = textToTrim.substringBefore(',')
                         val lat = weatherData.coord?.lat
                         val lon = weatherData.coord?.lon
                         validate("lat=$lat&lon=$lon", "forecast")
-//                        Thread.sleep(3000)
+                        Thread.sleep(3000)
                         val temp = FInfo.mainTemp
                         val rWind = FInfo.wind
                         val rHumidity = FInfo.humidity
@@ -350,6 +345,7 @@ class WeatherMainFragment (): Fragment() {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_CELLULAR")
                     return true
                 }
+
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                     Log.i("errtest", "NetworkCapabilities.TRANSPORT_WIFI")
                     return true

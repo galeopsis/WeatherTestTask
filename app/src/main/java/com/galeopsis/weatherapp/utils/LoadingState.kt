@@ -1,18 +1,12 @@
 package com.galeopsis.weatherapp.utils
 
+sealed class LoadingState {
+    object LOADING : LoadingState()
+    object SUCCESS : LoadingState()
+    object FAILED : LoadingState()
+    data class ERROR(val message: String?) : LoadingState()
 
-
-@Suppress("DataClassPrivateConstructor")
-data class LoadingState private constructor(val status: Status, val msg: String? = null) {
     companion object {
-        val LOADED = LoadingState(Status.SUCCESS)
-        val LOADING = LoadingState(Status.RUNNING)
-        fun error(msg: String?) = LoadingState(Status.FAILED, msg)
-    }
-
-    enum class Status {
-        RUNNING,
-        SUCCESS,
-        FAILED
+        fun error(msg: String?) = ERROR(msg)
     }
 }

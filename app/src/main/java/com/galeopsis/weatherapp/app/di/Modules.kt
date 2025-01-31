@@ -18,7 +18,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "http://api.openweathermap.org/data/2.5/"
+const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
 val viewModelModule = module {
     single { MainViewModel(get()) }

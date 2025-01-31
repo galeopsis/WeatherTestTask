@@ -25,12 +25,21 @@ class MainViewModel(
     fun fetchData(inputData: String, method: String) {
         viewModelScope.launch {
             try {
-                _loadingState.value = LoadingState.LOADING
+                Log.d("testWeatherApp", "Fetching data with: fetchData")
+                _loadingState.postValue(LoadingState.LOADING)
+                Log.d("testWeatherApp", "Fetching data with: $inputData, method: $method")
+
                 weatherRepository.refresh(inputData, method)
-                _loadingState.value = LoadingState.LOADED
+
+                // Добавим проверку данных
+                weatherRepository.data.value?.let {
+                    Log.d("testWeatherApp", "Data received: ${it.size} items")
+                } ?: Log.e("testWeatherApp", "Data is null")
+
+                _loadingState.postValue(LoadingState.SUCCESS)
             } catch (e: Exception) {
-                _loadingState.value = LoadingState.error(e.message)
-                Log.d("errtest", "error: ${e.message} ")
+                Log.e("testWeatherApp", "Error fetching data: ${e.stackTraceToString()}")
+                _loadingState.postValue(LoadingState.error(e.message))
             }
         }
     }

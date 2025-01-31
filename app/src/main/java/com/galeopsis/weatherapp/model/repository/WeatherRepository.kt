@@ -25,6 +25,7 @@ class WeatherRepository(
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun refresh(data: String, method: String) {
         withContext(Dispatchers.IO) {
+            Log.d("testWeatherApp", "Запрос данных: inputData=$data, method=$method")
             when (method) {
                 "name" -> {
                     val weatherData = weatherApi.getWeatherByCityNameAsync(API_KEY, data).await()

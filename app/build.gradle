@@ -1,26 +1,29 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
-apply plugin: 'kotlin-kapt'
 
 def gitCommitCount = getGitCommitCount()
 
-
 android {
-    compileSdkVersion 33
+    compileSdk 35
     buildToolsVersion "30.0.3"
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     defaultConfig {
         applicationId "com.galeopsis.weatherapp"
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode gitCommitCount
         versionName "1.2.0"
 
@@ -29,14 +32,17 @@ android {
 
     viewBinding.enabled = true
 
-    buildTypes.each {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("apikey.properties").newDataInputStream ())
-        def apiKey = properties.getProperty("my_api_key", "")
-        it.buildConfigField "String", "API_KEY", apiKey
+    viewBinding {
+        enabled = true
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     buildTypes {
+
         release {
             versionNameSuffix ".${gitCommitCount}"
             minifyEnabled false
@@ -62,83 +68,63 @@ android {
             }
         }
     }
-    tasks.whenTaskAdded { task ->
-        if (task.name.startsWith("bundle")) {
-            def renameTaskName = "rename${task.name.capitalize()}Aab"
-            def flavor = task.name.substring("bundle".length()).uncapitalize()
-            def path = "${buildDir}/outputs/bundle/${flavor}/"
-            def isDebug = gradle.startParameter.taskRequests.any { !it.args.isEmpty() && it.args.first().contains("Debug") }
-            def flavorNameFile
-            if (!isDebug)
-                flavorNameFile = flavor.replace("Release", "_")
-            else
-                flavorNameFile = flavor.replace("Debug", "_")
-            def versionNameSuffix = ".${gitCommitCount}"
-            tasks.create(renameTaskName, Copy) {
-                from(path)
-                into(path)
-                destinationDir file("${buildDir}/outputs/bundle/${flavor}/")
-                rename { String fileName -> "${flavorNameFile}${getDate()}_${defaultConfig.versionName}${versionNameSuffix}.aab" }
-                doLast{
-                    def tree = fileTree(path)
-                    tree.include '**/app*.aab'
-                    tree.each { it.delete() }
-                }
-            }
-            task.finalizedBy(renameTaskName)
-        }
+
+    // Загрузка API_KEY
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apiKey = properties.getProperty("my_api_key", "")
+        it.buildConfigField "String", "API_KEY", "\"${apiKey}\""
     }
+
     namespace 'com.galeopsis.weatherapp'
 }
 
 dependencies {
-
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     implementation 'com.neovisionaries:nv-i18n:1.29'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
 
-    //Room
-    implementation "androidx.room:room-runtime:2.5.1"
-    implementation "androidx.room:room-rxjava2:2.5.1"
-    kapt "androidx.room:room-compiler:2.5.1"
+    // Room
+    implementation "androidx.room:room-runtime:2.6.1"
+    implementation "androidx.room:room-rxjava2:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
 
-    //Kotlin Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
 
     // Koin
-    implementation "org.koin:koin-android:2.2.2"
-    implementation 'org.koin:koin-androidx-viewmodel:2.2.2'
-    implementation 'org.koin:koin-androidx-scope:2.2.2'
+    implementation("io.insert-koin:koin-android:4.0.2")
 
-    //GSON
-    implementation 'com.google.code.gson:gson:2.10'
+    // GSON
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    //Retrofit2
+    // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
-    //Okhttp3
+    // Okhttp3
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.11"
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
 
-    //Glide for Image Loading
-    implementation "com.github.bumptech.glide:glide:4.14.2"
+    // Glide for Image Loading
+    implementation "com.github.bumptech.glide:glide:4.16.0"
 
-    //Multidex
+    // Multidex
     implementation "androidx.multidex:multidex:2.0.1"
-
-
 }
 
 static getGitCommitCount() {
